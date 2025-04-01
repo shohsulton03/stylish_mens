@@ -13,6 +13,8 @@ import { CategoryModule } from './category/category.module';
 import { DiscountModule } from './discount/discount.module';
 import { SizesModule } from './sizes/sizes.module';
 import { ColorsModule } from './colors/colors.module';
+import { ProductModule } from './product/product.module';
+import { OrderModule } from './order/order.module';
 
 @Module({
   imports: [
@@ -42,6 +44,8 @@ import { ColorsModule } from './colors/colors.module';
     DiscountModule,
     SizesModule,
     ColorsModule,
+    ProductModule,
+    OrderModule,
   ],
   controllers: [],
   providers: [],

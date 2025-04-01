@@ -9,6 +9,10 @@ import { AuthModule } from './auth/auth.module';
 import { TeamSectionModule } from './team_section/team_section.module';
 import { FileModule } from './file/file.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { CategoryModule } from './category/category.module';
+import { DiscountModule } from './discount/discount.module';
+import { SizesModule } from './sizes/sizes.module';
+import { ColorsModule } from './colors/colors.module';
 
 @Module({
   imports: [
@@ -34,6 +38,10 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     AuthModule,
     TeamSectionModule,
     FileModule,
+    CategoryModule,
+    DiscountModule,
+    SizesModule,
+    ColorsModule,
   ],
   controllers: [],
   providers: [],

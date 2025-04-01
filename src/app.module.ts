@@ -2,10 +2,20 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
+import { AdminModule } from './admin/admin.module';
+import { ContactModule } from './contact/contact.module';
+import { FaqModule } from './faq/faq.module';
+import { AuthModule } from './auth/auth.module';
+import { TeamSectionModule } from './team_section/team_section.module';
+import { FileModule } from './file/file.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: ".env", isGlobal: true }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, "..", "static"),
+    }),
     TypeOrmModule.forRoot({
       type: "postgres",
       host: process.env.POSTGRES_HOST,
@@ -18,6 +28,12 @@ import { join } from 'path';
       logging: true,
       autoLoadEntities: true,
     }),
+    AdminModule,
+    ContactModule,
+    FaqModule,
+    AuthModule,
+    TeamSectionModule,
+    FileModule,
   ],
   controllers: [],
   providers: [],

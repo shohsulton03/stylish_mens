@@ -2,6 +2,13 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
+import { AdminModule } from './admin/admin.module';
+import { ContactModule } from './contact/contact.module';
+import { FaqModule } from './faq/faq.module';
+import { AuthModule } from './auth/auth.module';
+import { TeamSectionModule } from './team_section/team_section.module';
+import { FileModule } from './file/file.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { CategoryModule } from './category/category.module';
 import { DiscountModule } from './discount/discount.module';
 import { SizesModule } from './sizes/sizes.module';
@@ -10,6 +17,9 @@ import { ColorsModule } from './colors/colors.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: ".env", isGlobal: true }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, "..", "static"),
+    }),
     TypeOrmModule.forRoot({
       type: "postgres",
       host: process.env.POSTGRES_HOST,
@@ -22,6 +32,12 @@ import { ColorsModule } from './colors/colors.module';
       logging: true,
       autoLoadEntities: true,
     }),
+    AdminModule,
+    ContactModule,
+    FaqModule,
+    AuthModule,
+    TeamSectionModule,
+    FileModule,
     CategoryModule,
     DiscountModule,
     SizesModule,

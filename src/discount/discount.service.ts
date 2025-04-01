@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadGatewayException, Injectable } from '@nestjs/common';
 import { CreateDiscountDto } from './dto/create-discount.dto';
 import { UpdateDiscountDto } from './dto/update-discount.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -68,7 +68,7 @@ export class DiscountService {
     const discount = await this.discountRepo.findOne({ where: { id }});
 
     if (!discount) {
-      throw new Error('Discount not found ��️');
+      throw new  BadGatewayException('Discount not found ��️');
     }
 
     await this.discountRepo.remove(discount);

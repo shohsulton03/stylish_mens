@@ -2,6 +2,10 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
+import { CategoryModule } from './category/category.module';
+import { DiscountModule } from './discount/discount.module';
+import { SizesModule } from './sizes/sizes.module';
+import { ColorsModule } from './colors/colors.module';
 
 @Module({
   imports: [
@@ -18,6 +22,10 @@ import { join } from 'path';
       logging: true,
       autoLoadEntities: true,
     }),
+    CategoryModule,
+    DiscountModule,
+    SizesModule,
+    ColorsModule,
   ],
   controllers: [],
   providers: [],

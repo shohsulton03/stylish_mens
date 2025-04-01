@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadGatewayException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -53,7 +53,7 @@ export class CategoryService {
     const category = await this.categoryRepo.findOne({where: { id }});
 
     if(!category) {
-      throw new NotFoundException(`Category with id ${id} not found`);
+      throw new BadGatewayException(`Category with id ${id} not found ✖️`);
     }
 
     return { message: 'Category deleted successfully ✅'};

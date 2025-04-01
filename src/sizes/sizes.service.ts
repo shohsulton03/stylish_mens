@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadGatewayException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateSizeDto } from './dto/create-size.dto';
 import { UpdateSizeDto } from './dto/update-size.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -55,15 +55,16 @@ export class SizesService {
   }
 
   async remove(id: number) {
-
-    const size = await this.sizeRepo.findOne({ where: { id }});
-
-    if (!size) {
-      throw new Error('Size not found ��️');
+  
+      const discount = await this.sizeRepo.findOne({ where: { id }});
+  
+      if (!discount) {
+        throw new  BadGatewayException('Size not found ✖️');
+      }
+  
+      await this.sizeRepo.remove(discount);
+      
+      return `Discount with ID ${id} has been deleted successfully`;
     }
 
-    await this.sizeRepo.remove(size);
-
-    return { message: 'Size deleted id successfully ✅'};
-  }
 }

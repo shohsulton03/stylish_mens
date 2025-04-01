@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadGatewayException, Injectable } from '@nestjs/common';
 import { CreateColorDto } from './dto/create-color.dto';
 import { UpdateColorDto } from './dto/update-color.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -57,7 +57,7 @@ export class ColorsService {
     const color = await this.colorRepo.findOne({ where: { id }});
 
     if (!color) {
-      throw new Error('Color not found');
+      throw new BadGatewayException('Color not found ✖️');
     }
 
     await this.colorRepo.remove(color);

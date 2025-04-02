@@ -1,12 +1,14 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Product } from "../../product/entities/product.entity";
 
-@Entity('color')
+@Entity("color")
 export class Color {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({ type: 'varchar'})
-    color: string;
+  @Column({ type: "varchar" })
+  color: string;
 
-
+  @ManyToMany(() => Product, (product) => product.colors)
+  products: Product[];
 }

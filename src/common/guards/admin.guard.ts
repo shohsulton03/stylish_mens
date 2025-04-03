@@ -33,7 +33,7 @@ export class AdminGuard implements CanActivate {
       let payload: any;
       try {
         payload = await jwtService.verify(token, {
-          secret: process.env.ACCESS_TOKEN_ADMIN_KEY,
+          secret: process.env.ACCESS_TOKEN_KEY,
         });
       } catch (error) {
         console.log(error);

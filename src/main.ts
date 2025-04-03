@@ -24,7 +24,7 @@ async function start() {
           "http://localhost:5174",
           "http://localhost:3001",
           "http://localhost:3000",
-          "http://45.92.173.150:3001",
+          "http://170.64.234.64:3030",
         ];
         if (!origin || allowedOrigins.includes(origin)) {
           callback(null, true);

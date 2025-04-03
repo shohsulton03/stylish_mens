@@ -15,6 +15,9 @@ import { SizesModule } from './sizes/sizes.module';
 import { ColorsModule } from './colors/colors.module';
 import { ProductModule } from './product/product.module';
 import { OrderModule } from './order/order.module';
+import { TelegramModule } from './telegram_bot/telegram_bot.module';
+import { ContactBotServiceModule } from './contact-bot-service/contact-bot-service.module';
+import { ContactFormModule } from './contact_form/contact_form.module';
 
 @Module({
   imports: [
@@ -46,6 +49,9 @@ import { OrderModule } from './order/order.module';
     ColorsModule,
     ProductModule,
     OrderModule,
+    TelegramModule,
+    ContactBotServiceModule,
+    ContactFormModule,
   ],
   controllers: [],
   providers: [],

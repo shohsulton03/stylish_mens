@@ -8,6 +8,7 @@ import {
   Delete,
   UseInterceptors,
   UploadedFile,
+  UseGuards,
 } from "@nestjs/common";
 import { TeamSectionService } from "./team_section.service";
 import { CreateTeamSectionDto } from "./dto/create-team_section.dto";
@@ -15,6 +16,7 @@ import { UpdateTeamSectionDto } from "./dto/update-team_section.dto";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { TeamSection } from "./entities/team_section.entity";
 import { FileInterceptor } from "@nestjs/platform-express";
+import { AdminGuard } from "../common/guards/admin.guard";
 
 @ApiTags("Team Section")
 @Controller("team-section")
@@ -27,6 +29,7 @@ export class TeamSectionController {
     description: "Added",
     type: TeamSection,
   })
+  @UseGuards(AdminGuard)
   @UseInterceptors(FileInterceptor("file"))
   @Post()
   create(
@@ -64,6 +67,7 @@ export class TeamSectionController {
     description: "Update by Id",
     type: TeamSection,
   })
+  @UseGuards(AdminGuard)
   @UseInterceptors(FileInterceptor("file"))
   @Patch(":id")
   update(
@@ -80,6 +84,7 @@ export class TeamSectionController {
     description: "Delete",
     type: Object,
   })
+  @UseGuards(AdminGuard)
   @Delete(":id")
   remove(@Param("id") id: string) {
     return this.teamSectionService.remove(+id);

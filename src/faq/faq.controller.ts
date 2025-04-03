@@ -6,12 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from "@nestjs/common";
 import { FaqService } from "./faq.service";
 import { CreateFaqDto } from "./dto/create-faq.dto";
 import { UpdateFaqDto } from "./dto/update-faq.dto";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Faq } from "./entities/faq.entity";
+import { AdminGuard } from "../common/guards/admin.guard";
 
 @ApiTags("FAQ")
 @Controller("faq")
@@ -24,6 +26,7 @@ export class FaqController {
     description: "Added",
     type: Faq,
   })
+  @UseGuards(AdminGuard)
   @Post()
   create(@Body() createFaqDto: CreateFaqDto) {
     return this.faqService.create(createFaqDto);
@@ -57,6 +60,7 @@ export class FaqController {
     description: "Update by Id",
     type: Faq,
   })
+  @UseGuards(AdminGuard)
   @Patch(":id")
   update(@Param("id") id: string, @Body() updateFaqDto: UpdateFaqDto) {
     return this.faqService.update(+id, updateFaqDto);
@@ -68,6 +72,7 @@ export class FaqController {
     description: "Delete self",
     type: Object,
   })
+  @UseGuards(AdminGuard)
   @Delete(":id")
   remove(@Param("id") id: string) {
     return this.faqService.remove(+id);

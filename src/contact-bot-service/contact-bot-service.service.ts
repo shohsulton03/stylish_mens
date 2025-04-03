@@ -31,6 +31,14 @@ export class ContactBotServiceService {
     `;
     
     // Xabarni admin chatga yuborish
-    await this.bot.telegram.sendMessage(this.chatId, message, { parse_mode: 'Markdown' });
+    // await this.bot.telegram.sendMessage(this.chatId, message, { parse_mode: 'Markdown' });
+
+    try {
+      await this.bot.telegram.sendMessage(this.chatId, message, {
+        parse_mode: "Markdown",
+      });
+    } catch (error) {
+      console.error("Error sending message to Telegram:", error);
+    }
   }
 }

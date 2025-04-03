@@ -40,9 +40,13 @@ export class OrderService {
             throw new Error('Buyurtma bazaga saqlanmadi');
         }
 
-        // 🔹 Telegramga xabar yuborish
-        await this.telegramService.sendOrderNotification(savedOrder); // ✅ TO‘G‘RI CHAQRILGAN
-
+        try {
+          await this.telegramService.sendOrderNotification(savedOrder);
+      } catch (error) {
+          console.error('Error sending message to Telegram:', error);
+          throw new Error('Telegram xabar yuborishda xatolik yuz berdi.');
+      }
+      
         return savedOrder;
     } catch (error) {
         console.error('❌ Buyurtma yaratishda xatolik:', error.stack);

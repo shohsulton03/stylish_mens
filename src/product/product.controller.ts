@@ -1,34 +1,65 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ProductService } from './product.service';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseInterceptors,
+  UploadedFiles,
+  Query,
+} from "@nestjs/common";
+import { ProductService } from "./product.service";
+import { CreateProductDto } from "./dto/create-product.dto";
+import { UpdateProductDto } from "./dto/update-product.dto";
+import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { Product } from "./entities/product.entity";
+import { FilesInterceptor } from "@nestjs/platform-express";
+import { FilterProductDto } from "./dto/filter-product.dto";
 
-@Controller('product')
+@ApiTags("Product")
+@Controller("product")
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
+  @ApiOperation({ summary: "Add new product" })
+  @ApiResponse({
+    status: 201,
+    description: "Added",
+    type: Product,
+  })
+  @UseInterceptors(FilesInterceptor("files", 10))
   @Post()
-  create(@Body() createProductDto: CreateProductDto) {
-    return this.productService.create(createProductDto);
+  create(
+    @Body() createProductDto: CreateProductDto,
+    @UploadedFiles() files: Array<any>
+  ) {
+    return this.productService.create(createProductDto, files);
   }
 
   @Get()
-  findAll() {
-    return this.productService.findAll();
+  findAll(@Query() filterProductDto: FilterProductDto) {
+    return this.productService.findAll(filterProductDto);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
+  @Get(":id")
+  findOne(@Param("id") id: string) {
     return this.productService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productService.update(+id, updateProductDto);
+  @UseInterceptors(FilesInterceptor("files", 10))
+  @Patch(":id")
+  update(
+    @Param("id") id: string,
+    @Body() updateProductDto: UpdateProductDto,
+    @UploadedFiles() files: Array<any>
+  ) {
+    return this.productService.update(+id, updateProductDto, files);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
+  @Delete(":id")
+  remove(@Param("id") id: string) {
     return this.productService.remove(+id);
   }
 }

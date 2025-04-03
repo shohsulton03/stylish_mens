@@ -1,14 +1,14 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { OrderProduct } from "src/common/types/order-product.type";
 
 export class CreateOrderDto {
     @ApiProperty({
         description: "The id of the cart the order is associated with",
         example: 1,
     })
-    @IsNumber()
-    @IsNotEmpty()
-    cartId: number;
+    // @IsNotEmpty()
+    product_ts: OrderProduct[];
 
     @ApiProperty({
         description: "User full-name",

@@ -15,7 +15,7 @@ export class ColorsService {
     const color = await this.colorRepo.create(createColorDto);
 
     if(!color){
-      throw new Error('Failed to create color');
+      throw new BadGatewayException('Failed to create color');
     }
 
     await this.colorRepo.save(color);

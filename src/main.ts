@@ -14,7 +14,7 @@ async function start() {
     app.use(cookieParser());
     app.useGlobalInterceptors(new ResponseInterceptor());
     app.useGlobalFilters(new AllExceptionsFilter());
-    app.useGlobalPipes(new ValidationPipe());
+    app.useGlobalPipes(new ValidationPipe({transform:true}));
     app.setGlobalPrefix("api");
 
     app.enableCors({

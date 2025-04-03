@@ -1,3 +1,4 @@
+import { OrderProduct } from "src/common/types/order-product.type";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 
@@ -6,8 +7,9 @@ export class Order {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ type: 'int'})
-    cartId: number;
+    //  product json formatda keladi !
+    @Column({ type: 'jsonb'})
+    product_ts: OrderProduct[];
 
     @Column({ type: 'varchar'})
     full_name: string;

@@ -11,7 +11,7 @@ import { AdminGuard } from '../common/guards/admin.guard';
 export class ColorsController {
   constructor(private readonly colorsService: ColorsService) {}
 
-  @ApiOperation({ summary: "Add newe color" })
+  @ApiOperation({ summary: "Add new color" })
   @ApiResponse({
     status: 201,
     description: "Add new color",

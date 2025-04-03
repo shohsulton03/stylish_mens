@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsNotEmpty, IsString, Length } from "class-validator";
 
 export class CreateCategoryDto {
     @ApiProperty({
@@ -16,5 +16,6 @@ export class CreateCategoryDto {
     })
     @IsString()
     @IsNotEmpty()
+    @Length(0, 2000)
     description: string;
 }

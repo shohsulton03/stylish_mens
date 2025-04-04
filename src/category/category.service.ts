@@ -56,6 +56,8 @@ export class CategoryService {
       throw new BadGatewayException(`Category with id ${id} not found ✖️`);
     }
 
+    await this.categoryRepo.remove(category);
+
     return { message: 'Category deleted successfully ✅'};
 
   }

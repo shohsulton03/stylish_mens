@@ -51,8 +51,8 @@ export class TelegramService {
 📝 *Tavsif:* ${product.description || "Mavjud emas"}
 💵 *Narxi:* ${!isNaN(price) ? price.toFixed(2) : "Noma‘lum"} UZS
 📦 *Miqdori:* ${!isNaN(quantity) ? quantity : "Noma‘lum"}
-🏷 *Kategoriya:* ${product.category?.name || "Kategoriya yo‘q"}
-🎨 *Ranglar:* ${product.colors?.length > 0 ? product.colors.map((c) => c.color).join(", ") : "Mavjud emas"}
+🏷 *Kategoriya:* ${product.category?.name_eng || "Kategoriya yo‘q"}
+🎨 *Ranglar:* ${product.colors?.length > 0 ? product.colors.map((c) => c.color_eng).join(", ") : "Mavjud emas"}
 🔲 *O‘lchamlar:* ${product.sizes?.length > 0 ? product.sizes.map((s) => s.size).join(", ") : "Mavjud emas"}
 💸 *Chegirma:* ${product.discount?.discount || "Mavjud emas"}
 🧵 *Material:* ${product.material || "Ma‘lumot yo‘q"}

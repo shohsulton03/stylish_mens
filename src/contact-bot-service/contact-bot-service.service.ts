@@ -31,7 +31,7 @@ export class ContactBotServiceService {
     `;
     
     try {
-      const response = await this.bot.sendMessage(this.chatId, message, { parse_mode: 'Markdown' });
+      const response = await this.bot.sendMessage(this.chatId, message);
       console.log('Telegram response:', response);
     } catch (error) {
       console.error('❌ Error details:', error);

@@ -45,8 +45,13 @@ export class CategoryService {
     }
 
     Object.assign(category, updateCategoryDto); // Ma'lumotlarni yangilash
-    return await this.categoryRepo.save(category); // Yangilangan obyektni qaytarish
+    await this.categoryRepo.save(category); // Yangilangan obyektni saqlash
+
+    // Yangi tartibni saqlash
+    return await this.categoryRepo.find({ order: { id: 'ASC' } }); // id bo'yicha tartiblanadi
 }
+
+
 
 
   async remove(id: number) {

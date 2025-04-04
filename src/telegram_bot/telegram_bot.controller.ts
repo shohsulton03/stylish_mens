@@ -16,7 +16,7 @@ export class TelegramBotService {
     }
 
     // node-telegram-bot-api yordamida botni sozlash
-    this.bot = new TelegramBot(token, { polling: true }); // pollingni faollashtirdik
+    this.bot = new TelegramBot(token, { polling: false }); // pollingni faollashtirdik
   }
 
   // xabar yuborish funktsiyasi

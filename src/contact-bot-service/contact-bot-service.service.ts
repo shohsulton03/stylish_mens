@@ -21,7 +21,6 @@ export class ContactBotServiceService {
     this.chatId = chatId as string;
 
   }
-
   async sendContactFormNotification(contactFormData: CreateContactFormDto) {
     const message = `
 📝 *New Contact Form Submission!*

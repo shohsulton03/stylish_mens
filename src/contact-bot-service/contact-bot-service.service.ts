@@ -9,8 +9,8 @@ export class ContactBotServiceService {
   private chatId: string;
 
   constructor(private configService: ConfigService) {
-    const token = this.configService.get<string>('TELEGRAM_BOT_TOKEN_2');
-    const chatId = this.configService.get<string>('TELEGRAM_CHAT_ID_2');
+    const token = process.env.TELEGRAM_BOT_TOKEN_2;
+    const chatId = process.env.TELEGRAM_CHAT_ID_2;
 
     if (!token || !chatId) {
       throw new Error('Telegram token or chat ID is missing');

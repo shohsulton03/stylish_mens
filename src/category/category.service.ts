@@ -38,16 +38,17 @@ export class CategoryService {
   }
 
   async update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    const category = await this.categoryRepo.findOne({ where: { id }})
+    const category = await this.categoryRepo.findOne({ where: { id } });
 
-    if(!category) {
-      throw new NotFoundException(`Category with id ${id} not found`);
-    } 
+    if (!category) {
+        throw new NotFoundException(`Category with id ${id} not found`);
+    }
 
-    Object.assign(category, updateCategoryDto);
+    await this.categoryRepo.update(id, updateCategoryDto);
 
-    return await this.categoryRepo.save(category);
+    return await this.categoryRepo.findOne({ where: { id } });
   }
+
 
   async remove(id: number) {
     const category = await this.categoryRepo.findOne({where: { id }});

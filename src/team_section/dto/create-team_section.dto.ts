@@ -20,10 +20,26 @@ export class CreateTeamSectionDto {
   full_name: string;
 
   @ApiProperty({
-    description: "Position of the team member in the team",
-    example: "Team Leader",
+    description: "Position in German",
+    example: "Manager",
   })
   @IsString()
   @IsNotEmpty()
-  position: string;
+  position_de: string;
+
+  @ApiProperty({
+    description: "Position in Russian",
+    example: "Менеджер",
+  })
+  @IsString()
+  @IsNotEmpty()
+  position_ru: string;
+
+  @ApiProperty({
+    description: "Position in English",
+    example: "Manager",
+  })
+  @IsString()
+  @IsNotEmpty()
+  position_eng: string;
 }

@@ -21,7 +21,7 @@ export class ContactBotServiceService {
     this.chatId = chatId as string;
 
     // Webhookni sozlash
-    const url = 'https://ngrok.com/r/iep/webhook';  // O'zingizning domain va pathni kiriting
+    const url = 'https://abc12345.ngrok.io/webhook';
     this.bot.setWebHook(url);
   }
 

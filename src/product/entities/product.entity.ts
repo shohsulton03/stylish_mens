@@ -18,10 +18,22 @@ export class Product {
   id: number;
 
   @Column({ type: "varchar" })
-  title: string;
+  title_eng: string;
+
+  @Column({ type: "varchar" })
+  title_ru: string;
+
+  @Column({ type: "varchar" })
+  title_de: string;
 
   @Column({ type: "text" })
-  description: string;
+  description_eng: string;
+
+  @Column({ type: "text" })
+  description_ru: string;
+
+  @Column({ type: "text" })
+  description_de: string;
 
   @Column({ type: "decimal" })
   price: number;

@@ -15,8 +15,10 @@ export class TeamSectionService {
   ) {}
 
   async create(createTeamSectionDto: CreateTeamSectionDto, file: any) {
-    const image = await this.fileService.saveFile(file);
-    createTeamSectionDto.image = image;
+    if (file) {
+      const image = await this.fileService.saveFile(file);
+      createTeamSectionDto.image = image;
+    }
 
     const newTeamSection =
       this.teamSectionRepository.create(createTeamSectionDto);

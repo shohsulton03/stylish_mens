@@ -25,7 +25,7 @@ export class SizesService {
   }
 
   findAll() {
-    return this.sizeRepo.find();
+    return this.sizeRepo.find({ order: { id: 'ASC' } });
   }
 
   async findOne(id: number) {

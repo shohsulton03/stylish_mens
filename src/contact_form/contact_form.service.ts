@@ -37,7 +37,7 @@ export class ContactFormService {
   
   
   findAll() {
-    return this.contactFormRepo.find();
+    return this.contactFormRepo.find({ order: { id: 'ASC' } });
   }
 
   async findOne(id: number) {

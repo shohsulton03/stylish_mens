@@ -24,7 +24,7 @@ export class ColorsService {
   }
 
   findAll() {
-    return this.colorRepo.find();
+    return this.colorRepo.find({ order: { id: 'ASC' } });
   }
 
   async findOne(id: number) {

@@ -4,7 +4,15 @@ import { IsOptional, IsArray, IsInt, IsString } from "class-validator";
 export class FilterProductDto {
   @IsOptional()
   @IsString()
-  title?: string;
+  title_de?: string;
+
+  @IsOptional()
+  @IsString()
+  title_ru?: string;
+
+  @IsOptional()
+  @IsString()
+  title_eng?: string;
 
   @IsOptional()
   @IsInt()

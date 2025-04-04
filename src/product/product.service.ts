@@ -68,8 +68,12 @@ export class ProductService {
         : createProductDto.materials;
 
     const product = new Product();
-    product.title = createProductDto.title;
-    product.description = createProductDto.description;
+    product.title_eng = createProductDto.title_eng;
+    product.title_de = createProductDto.title_de;
+    product.title_ru = createProductDto.title_ru;
+    product.description_de = createProductDto.description_de;
+    product.description_eng = createProductDto.description_de;
+    product.description_ru = createProductDto.description_ru;
     product.price = createProductDto.price;
     product.category = categorry;
     product.category_id = createProductDto.category_id;
@@ -89,7 +93,9 @@ export class ProductService {
 
   async findAll(filterProductDto: FilterProductDto) {
     const {
-      title,
+      title_de,
+      title_ru,
+      title_eng,
       category_id,
       sizes_id,
       colors_id,
@@ -102,8 +108,16 @@ export class ProductService {
 
     const filterConditions: any = {};
 
-    if (title) {
-      filterConditions.title = Like(`%${title}%`);
+    if (title_de) {
+      filterConditions.title = Like(`%${title_de}%`);
+    }
+
+    if (title_eng) {
+      filterConditions.title = Like(`%${title_eng}%`);
+    }
+
+    if (title_ru) {
+      filterConditions.title = Like(`%${title_ru}%`);
     }
 
     if (category_id) {

@@ -27,5 +27,21 @@ export class CreateContactDto {
   })
   @IsString()
   @IsNotEmpty()
-  address: string;
+  address_eng: string;
+
+  @ApiProperty({
+    description: "Contact address",
+    example: "123 Main St, Some City, Some Country",
+  })
+  @IsString()
+  @IsNotEmpty()
+  address_ru: string;
+
+  @ApiProperty({
+    description: "Contact address",
+    example: "123 Main St, Some City, Some Country",
+  })
+  @IsString()
+  @IsNotEmpty()
+  address_de: string;
 }

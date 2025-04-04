@@ -12,20 +12,52 @@ import {
 
 export class CreateProductDto {
   @ApiProperty({
-    description: "Mahsulot nomi",
+    description: "Mahsulot nomi inglis tilida",
     example: "Winter Jacket",
   })
   @IsString()
   @IsNotEmpty()
-  title: string;
+  title_eng: string;
 
   @ApiProperty({
-    description: "Mahsulot tavsifi",
+    description: "Mahsulot nomi rus tilida",
+    example: "Зимняя куртка",
+  })
+  @IsString()
+  @IsNotEmpty()
+  title_ru: string;
+
+  @ApiProperty({
+    description: "Mahsulot nomi germani tilida",
+    example: "Winterjacke",
+  })
+  @IsString()
+  @IsNotEmpty()
+  title_de: string;
+
+  @ApiProperty({
+    description: "Mahsulot tavsifi (Inglizcha)",
     example: "High quality woolen jacket",
   })
   @IsString()
   @IsNotEmpty()
-  description: string;
+  description_eng: string;
+
+  @ApiProperty({
+    description: "Mahsulot tavsifi (Ruscha)",
+    example: "Пальто из высококачественной шерсти",
+  })
+  @IsString()
+  @IsNotEmpty()
+  description_ru: string;
+
+  @ApiProperty({
+    description: "Mahsulot tavsifi (Nemischa)",
+    example: "Hochwertige Wolljacke",
+  })
+  @IsString()
+  @IsNotEmpty()
+  description_de: string;
 
   @ApiProperty({
     description: "Mahsulot narxi",
@@ -73,7 +105,6 @@ export class CreateProductDto {
     description: "Mahsulot tarkibidagi materiallar",
     example: { cotton: "80%", wool: "20%" },
   })
-//   @IsObject()
   @IsString()
   @IsOptional()
   materials: { [key: string]: string };

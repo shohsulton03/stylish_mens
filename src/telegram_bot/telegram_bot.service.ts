@@ -17,11 +17,11 @@ export class TelegramService {
     }
 
     // Botni polling rejimida ishga tushirish
-    this.bot = new TelegramBot(token, { polling: false });
+    this.bot = new TelegramBot(token, { polling: true });
 
-    // Pollingni boshlash
-    this.bot.startPolling().catch((err) => {
-      console.error('❌ Pollingni ishga tushirishda xatolik:', err.message);
+    // Pollingni boshlash (faqat bir marta ishga tushirish)
+    this.bot.on('polling_error', (error) => {
+      console.error('❌ Polling xatoligi:', error.message);
     });
   }
 
@@ -58,7 +58,7 @@ export class TelegramService {
   - 💸 *Chegirma:* ${product.discount ? product.discount.discount : 'Mavjud emas'}
   - 🧵 *Material:* ${product.material ? JSON.stringify(product.material) : 'Mavjud emas'}
   - 💰 *Umumiy narx:* ${(totalProductPrice).toFixed(2)} UZS
-  `;
+  `; 
       }).join('\n')
     : 'Mahsulotlar mavjud emas'}
   

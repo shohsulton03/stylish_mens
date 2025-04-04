@@ -14,9 +14,6 @@ export class TelegramBotService {
     if (!token) throw new Error('❌ TELEGRAM_BOT_TOKEN yetishmayapti.');
     if (!this.chatId) throw new Error('❌ TELEGRAM_CHAT_ID yetishmayapti.');
 
-    // Pollingni faollashtirish
-    this.bot = new TelegramBot(token, { polling: false });
-
     // Pollingni boshlash (Webhook kerak emas)
     this.bot.on('message', (msg) => {
       console.log('📩 Yangi xabar olindi:', msg.text);

@@ -14,15 +14,14 @@ export class TelegramBotService {
     if (!token) throw new Error('❌ TELEGRAM_BOT_TOKEN yetishmayapti.');
     if (!this.chatId) throw new Error('❌ TELEGRAM_CHAT_ID yetishmayapti.');
 
+    // Pollingni faollashtirish
     this.bot = new TelegramBot(token, { polling: false });
 
-    // ✅ Webhook o‘rnatish
-    const webhookUrl = this.configService.get<string>('TELEGRAM_WEBHOOK_URL') || '';
-    if (webhookUrl) {
-      this.bot.setWebHook(`${webhookUrl}/telegram/webhook`).catch((err) => {
-        console.error('❌ Webhook o‘rnatishda xatolik:', err.message);
-      });
-    }
+    // Pollingni boshlash (Webhook kerak emas)
+    this.bot.on('message', (msg) => {
+      console.log('📩 Yangi xabar olindi:', msg.text);
+      // Bu yerda boshqa kerakli xabarlar yoki funktsiyalarni qo‘shishingiz mumkin
+    });
   }
 
   // ✅ Telegramga xabar yuborish funktsiyasi

@@ -18,31 +18,33 @@ export class OrderController {
 
   
   @ApiOperation({ summary: 'Add new order' })
-  @ApiResponse({
-    status: 201,
-    description: 'A new order has been successfully created',
-    type: Order,
-  })
-  @Post()
-  async create(@Body() createOrderDto: CreateOrderDto) {
-    try {
-        console.log("✅ Buyurtma olindi:", createOrderDto);
+@ApiResponse({
+  status: 201,
+  description: 'A new order has been successfully created',
+  type: Order,
+})
+@Post()
+async create(@Body() createOrderDto: CreateOrderDto) {
+  try {
+    console.log("✅ Buyurtma olindi:", createOrderDto);
 
-        const newOrder = await this.orderService.create(createOrderDto);
+    // Buyurtmani yaratish
+    const newOrder = await this.orderService.create(createOrderDto);
 
-        console.log("📌 Bazaga saqlandi:", newOrder);
+    console.log("📌 Bazaga saqlandi:", newOrder);
 
-        // await this.telegramService.sendOrderNotification(newOrder);
+    // Telegramga buyurtma yuborish
+    await this.telegramService.sendOrderNotification(newOrder);
 
-        return {
-            success: true,
-            message: 'Buyurtma qabul qilindi va Telegramga yuborildi!',
-            data: newOrder,
-        };
-    } catch (error) {
-        console.error('❌ Xatolik:', error.message);
-        throw new BadRequestException('Buyurtmani yaratishda xatolik yuz berdi!');
-    }
+    return {
+      success: true,
+      message: 'Buyurtma qabul qilindi va Telegramga yuborildi!',
+      data: newOrder,
+    };
+  } catch (error) {
+    console.error('❌ Xatolik:', error.message);
+    throw new BadRequestException('Buyurtmani yaratishda xatolik yuz berdi!');
+  }
 }
 
 

@@ -20,9 +20,6 @@ export class ContactBotServiceService {
     this.bot = new TelegramBot(token);
     this.chatId = chatId as string;
 
-    // Webhookni sozlash
-    const url = 'https://abc12345.ngrok.io/webhook';
-    this.bot.setWebHook(url);
   }
 
   async sendContactFormNotification(contactFormData: CreateContactFormDto) {

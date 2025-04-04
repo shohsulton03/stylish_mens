@@ -8,22 +8,28 @@ import { HttpService } from '@nestjs/axios';
 export class TelegramService {
   private bot: TelegramBot;
   private chatId: string;
-  private webhookUrl: string;
 
   constructor(private configService: ConfigService, private httpService: HttpService) {
     const token = this.configService.get<string>('TELEGRAM_BOT_TOKEN');
     this.chatId = this.configService.get<string>('TELEGRAM_CHAT_ID') || '';
-    this.webhookUrl = this.configService.get<string>('TELEGRAM_WEBHOOK_URL') || '';
 
     if (!token) throw new Error('❌ TELEGRAM_BOT_TOKEN yetishmayapti.');
     if (!this.chatId) throw new Error('❌ TELEGRAM_CHAT_ID yetishmayapti.');
-    if (!this.webhookUrl) throw new Error('❌ TELEGRAM_WEBHOOK_URL yetishmayapti.');
 
-    this.bot = new TelegramBot(token, { polling: false });
+    this.bot = new TelegramBot(token, { polling: false }); // Pollingni faollashtirish
 
-    // ✅ Webhookni o‘rnatish (xatolik bo‘lsa, dasturni to‘xtatmaydi)
-    this.bot.setWebHook(`${this.webhookUrl}/telegram/webhook`).catch((err) => {
-      console.error('❌ Webhook o‘rnatishda xatolik:', err.message);
+    // Pollingni boshlash
+    this.bot.startPolling().catch((err) => {
+      console.error('❌ Pollingni ishga tushirishda xatolik:', err.message);
+      setTimeout(() => this.restartPolling(), 5000); // Xatolik yuzaga kelganda pollingni qayta boshlash
+    });
+  }
+
+  // Pollingni qayta boshlash
+  private restartPolling() {
+    console.log('🔄 Polling qayta ishga tushirilmoqda...');
+    this.bot.startPolling().catch((err) => {
+      console.error('❌ Pollingni qayta ishga tushirishda xatolik:', err.message);
     });
   }
 

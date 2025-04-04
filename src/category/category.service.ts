@@ -44,10 +44,9 @@ export class CategoryService {
         throw new NotFoundException(`Category with id ${id} not found`);
     }
 
-    await this.categoryRepo.update(id, updateCategoryDto);
-
-    return await this.categoryRepo.findOne({ where: { id } });
-  }
+    Object.assign(category, updateCategoryDto); // Ma'lumotlarni yangilash
+    return await this.categoryRepo.save(category); // Yangilangan obyektni qaytarish
+}
 
 
   async remove(id: number) {

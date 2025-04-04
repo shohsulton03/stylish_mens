@@ -16,13 +16,6 @@ export class TelegramService {
       throw new Error('Telegram token or chat ID is missing');
     }
 
-    // Botni polling rejimida ishga tushirish
-    this.bot = new TelegramBot(token, { polling: false });
-
-    // Pollingni boshlash (faqat bir marta ishga tushirish)
-    this.bot.on('polling_error', (error) => {
-      console.error('❌ Polling xatoligi:', error.message);
-    });
   }
 
   // ✅ Telegramga xabar yuborish funktsiyasi
@@ -66,9 +59,7 @@ export class TelegramService {
   `;
 
     try {
-      await this.bot.sendMessage(this.chatId, message, {
-        parse_mode: "Markdown",
-      });
+      await this.bot.sendMessage(this.chatId, message);
       console.log('✅ Xabar muvaffaqiyatli yuborildi!');
     } catch (error) {
       console.error('❌ Telegram xabar yuborishda xatolik:', error.message);

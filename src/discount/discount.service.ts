@@ -27,27 +27,7 @@ export class DiscountService {
 
   // Fetch all Discounts
   async findAll() {
-    const disccounts = await this.discountRepo.find({order: {id: 'ASC'}})
-
-    if (!disccounts) {
-      throw new Error('Discounts not found ✖️');
-    }
-    
-    disccounts.map((discount) => {
-      const currentDate = new Date();
-      const startDate = new Date(discount.started_at);
-      const endDate = new Date(discount.finished_at);
-
-      if (currentDate >= startDate && currentDate <= endDate) {
-        discount.status = true;
-      } else {
-        discount.status = false;
-      }
-
-      this.discountRepo.save(discount);
-    })
-
-    return disccounts;
+    return this.discountRepo.find({ order: { id: 'ASC' } });
   }
 
 

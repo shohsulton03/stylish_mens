@@ -46,8 +46,8 @@ export class TelegramService {
   - 📝 *Description:* ${product.description}
   - 💵 *Price:* ${price.toFixed(2)} UZS
   - 📦 *Quantity:* ${quantity}
-  - 🏷️ *Category:* ${product.category ? product.category.name : 'No category'}
-  - 🎨 *Colors:* ${product.colors.length > 0 ? product.colors.map(color => color.color).join(', ') : 'No colors'}
+  - 🏷️ *Category:* ${product.category ? product.category.name_eng : 'No category'}
+  - 🎨 *Colors:* ${product.colors.length > 0 ? product.colors.map(color => color.color_eng).join(', ') : 'No colors'}
   - 🔲 *Sizes:* ${product.sizes.length > 0 ? product.sizes.map(size => size.size).join(', ') : 'No sizes'}
   - 💸 *Discount:* ${product.discount ? product.discount.discount : 'No discount'}
   - 🧵 *Material:* ${product.material ? JSON.stringify(product.material) : 'No material information'}

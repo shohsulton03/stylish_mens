@@ -3,18 +3,50 @@ import { IsNotEmpty, IsString } from "class-validator";
 
 export class CreateFaqDto {
   @ApiProperty({
-    description: "question",
-    example: "question",
+    description: "Question in English",
+    example: "What is your return policy?",
   })
   @IsString()
   @IsNotEmpty()
-  question: string;
+  question_eng: string;
 
   @ApiProperty({
-    description: "answer",
-    example: "asnwer",
+    description: "Question in Russian",
+    example: "Какова ваша политика возврата?",
   })
   @IsString()
   @IsNotEmpty()
-  answer: string;
+  question_ru: string;
+
+  @ApiProperty({
+    description: "Question in German",
+    example: "Was ist Ihre Rückgaberechtsrichtlinie?",
+  })
+  @IsString()
+  @IsNotEmpty()
+  question_de: string;
+
+  @ApiProperty({
+    description: "Answer in English",
+    example: "You can return items within 30 days.",
+  })
+  @IsString()
+  @IsNotEmpty()
+  answer_eng: string;
+
+  @ApiProperty({
+    description: "Answer in Russian",
+    example: "Вы можете вернуть товар в течение 30 дней.",
+  })
+  @IsString()
+  @IsNotEmpty()
+  answer_ru: string;
+
+  @ApiProperty({
+    description: "Answer in German",
+    example: "Sie können Artikel innerhalb von 30 Tagen zurücksenden.",
+  })
+  @IsString()
+  @IsNotEmpty()
+  answer_de: string;
 }

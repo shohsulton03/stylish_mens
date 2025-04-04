@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { Telegraf } from 'telegraf';
+import * as TelegramBot from 'node-telegram-bot-api';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class ContactBotServiceController {
-  private bot: Telegraf;
+  private bot: TelegramBot;
   private chatId: string;
 
   constructor(private configService: ConfigService) {
@@ -15,12 +15,14 @@ export class ContactBotServiceController {
       throw new Error('❌ Telegram token yoki chat ID yetishmayapti.');
     }
   
-    this.bot = new Telegraf(token);
+    // Botni node-telegram-bot-api bilan yaratish
+    this.bot = new TelegramBot(token, { polling: true });
   }
   
   async sendMessage(message: string) {
     try {
-      await this.bot.telegram.sendMessage(this.chatId, message);
+      // Xabarni yuborish
+      await this.bot.sendMessage(this.chatId, message);
       return '✅ Xabar yuborildi!';
     } catch (error) {
       console.error('❌ Telegram xabar yuborishda xatolik:', error.message);

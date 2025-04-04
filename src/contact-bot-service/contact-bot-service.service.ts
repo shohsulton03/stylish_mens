@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { Telegraf } from 'telegraf';
+import * as TelegramBot from 'node-telegram-bot-api';
 import { ConfigService } from '@nestjs/config';
 import { CreateContactFormDto } from 'src/contact_form/dto/create-contact_form.dto';
 
 @Injectable()
 export class ContactBotServiceService {
-  private bot: Telegraf;
+  private bot: TelegramBot;
   private chatId: string;
 
   constructor(private configService: ConfigService) {
@@ -16,12 +16,12 @@ export class ContactBotServiceService {
       throw new Error('Telegram token or chat ID is missing');
     }
 
-    this.bot = new Telegraf(token);
+    // node-telegram-bot-api bilan botni yaratish
+    this.bot = new TelegramBot(token, { polling: true });
     this.chatId = chatId as string;
   }
 
   async sendContactFormNotification(contactFormData: CreateContactFormDto) {
-    // Admin botga yuboriladigan xabar
     const message = `
 📝 *New Contact Form Submission!*
 👤 *Name:* ${contactFormData.name}
@@ -29,16 +29,27 @@ export class ContactBotServiceService {
 📧 *Email:* ${contactFormData.email}
 💬 *Comment:* ${contactFormData.comments}
     `;
-    
-    // Xabarni admin chatga yuborish
-    // await this.bot.telegram.sendMessage(this.chatId, message, { parse_mode: 'Markdown' });
 
-    try {
-      await this.bot.telegram.sendMessage(this.chatId, message, {
-        parse_mode: "Markdown",
-      });
-    } catch (error) {
-      console.error("Error sending message to Telegram:", error);
-    }
+    const attemptToSendMessage = async (retries = 3) => {
+      try {
+        const response = await this.bot.sendMessage(this.chatId, message, { parse_mode: 'Markdown' });
+        console.log('Telegram response:', response);
+      } catch (error) {
+        console.error('❌ Error details:', error);
+        if (error.response) {
+          console.error('Telegram error response:', error.response.data);
+        }
+        
+        if (retries > 0) {
+          console.log(`Retrying... Attempts remaining: ${retries}`);
+          await new Promise(resolve => setTimeout(resolve, 5000)); // 5 seconds delay before retrying
+          return attemptToSendMessage(retries - 1); // Retry the message
+        } else {
+          console.error('Failed to send message after multiple attempts.');
+        }
+      }
+    };
+
+    await attemptToSendMessage(); // Start with the first attempt
   }
 }

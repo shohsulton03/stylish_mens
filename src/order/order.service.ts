@@ -56,7 +56,7 @@ export class OrderService {
 
 
   findAll() {
-    return this.orderRepo.find();
+    return this.orderRepo.find({ order: { id: 'ASC' } });
   }
 
   async findOne(id: number) {

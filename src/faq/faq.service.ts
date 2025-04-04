@@ -16,7 +16,7 @@ export class FaqService {
   }
 
   async findAll() {
-    return this.faqRepo.find();
+    return this.faqRepo.find({ order: { id: 'ASC' } });
   }
 
   async findOne(id: number) {

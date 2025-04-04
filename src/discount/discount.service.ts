@@ -27,7 +27,7 @@ export class DiscountService {
 
   // Fetch all Discounts
   findAll() {
-    return this.discountRepo.find();
+    return this.discountRepo.find({ order: { id: 'ASC' } });
   }
 
 

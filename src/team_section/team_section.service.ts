@@ -24,7 +24,7 @@ export class TeamSectionService {
   }
 
   async findAll() {
-    return this.teamSectionRepository.find();
+    return this.teamSectionRepository.find({ order: { id: 'ASC' } });
   }
 
   async findOne(id: number) {

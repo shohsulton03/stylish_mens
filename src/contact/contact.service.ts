@@ -28,7 +28,7 @@ export class ContactService {
   }
 
   async findAll() {
-    return this.contactRepo.find();
+    return this.contactRepo.find({ order: { id: 'ASC' } });
   }
 
   async findOne(id: number) {

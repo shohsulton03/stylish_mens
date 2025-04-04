@@ -23,8 +23,9 @@ export class CategoryService {
   }
 
   findAll() {
-    return this.categoryRepo.find();
+    return this.categoryRepo.find({ order: { id: 'ASC' } }); // id bo‘yicha o‘sish tartibida
   }
+  
 
   async findOne(id: number) {
     const category = this.categoryRepo.findOne({
@@ -50,9 +51,6 @@ export class CategoryService {
     // Yangi tartibni saqlash
     return await this.categoryRepo.find({ order: { id: 'ASC' } }); // id bo'yicha tartiblanadi
 }
-
-
-
 
   async remove(id: number) {
     const category = await this.categoryRepo.findOne({where: { id }});

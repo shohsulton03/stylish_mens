@@ -7,7 +7,13 @@ export class Color {
   id: number;
 
   @Column({ type: "varchar" })
-  color: string;
+  color_eng: string;
+
+  @Column({ type: "varchar" })
+  color_ru: string;
+
+  @Column({ type: "varchar" })
+  color_de: string;
 
   @ManyToMany(() => Product, (product) => product.colors)
   products: Product[];

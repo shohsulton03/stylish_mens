@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { Telegraf } from 'telegraf';
+import * as TelegramBot from 'node-telegram-bot-api';  // CommonJS import usuli
 import { ConfigService } from '@nestjs/config';
 import { CreateOrderDto } from '../order/dto/create-order.dto';
 
 @Injectable()
 export class TelegramService {
-  private bot: Telegraf;
+  private bot: TelegramBot;
   private chatId: string;
 
   constructor(private configService: ConfigService) {
@@ -16,7 +16,7 @@ export class TelegramService {
       throw new Error('Telegram token or chat ID is missing');
     }
 
-    this.bot = new Telegraf(token);
+    this.bot = new TelegramBot(token, { polling: true });
     this.chatId = chatId as string;
   }
 
@@ -60,12 +60,11 @@ export class TelegramService {
   `;
 
     try {
-      await this.bot.telegram.sendMessage(this.chatId, message, {
+      await this.bot.sendMessage(this.chatId, message, {
         parse_mode: "Markdown",
       });
     } catch (error) {
       console.error("Error sending message to Telegram:", error);
     }
-
   }
 }

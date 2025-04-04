@@ -1,31 +1,20 @@
-import { Injectable } from '@nestjs/common';
-import * as TelegramBot from 'node-telegram-bot-api';
-import { ConfigService } from '@nestjs/config';
+import { Controller, Post, Body } from '@nestjs/common';
+import { ContactBotServiceService } from './contact-bot-service.service';
+import { CreateContactFormDto } from 'src/contact_form/dto/create-contact_form.dto';
 
-@Injectable()
+@Controller('contact-bot')
 export class ContactBotServiceController {
-  private bot: TelegramBot;
-  private chatId: string;
+  constructor(private readonly contactBotService: ContactBotServiceService) {}
 
-  constructor(private configService: ConfigService) {
-    const token = this.configService.get<string>('TELEGRAM_BOT_TOKEN_2') || '';
-    this.chatId = this.configService.get<string>('TELEGRAM_CHAT_ID') || '';
-  
-    if (!token || !this.chatId) {
-      throw new Error('❌ Telegram token yoki chat ID yetishmayapti.');
-    }
-  
-    // Botni node-telegram-bot-api bilan yaratish
-    this.bot = new TelegramBot(token, { polling: true });
-  }
-  
-  async sendMessage(message: string) {
+  // Xabar yuborish metodini yaratish
+  @Post('send-message')
+  async sendMessage(@Body() contactFormData: CreateContactFormDto) {
     try {
       // Xabarni yuborish
-      await this.bot.sendMessage(this.chatId, message);
-      return '✅ Xabar yuborildi!';
+      await this.contactBotService.sendContactFormNotification(contactFormData);
+      return { message: '✅ Xabar yuborildi!' };
     } catch (error) {
-      console.error('❌ Telegram xabar yuborishda xatolik:', error.message);
+      console.error('❌ Telegram xabar yuborishda xatolik:', error);
       throw new Error('Telegram xabar yuborishda muammo yuz berdi.');
     }
   }

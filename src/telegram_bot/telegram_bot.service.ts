@@ -17,7 +17,7 @@ export class TelegramService {
     }
 
     // Botni polling rejimida ishga tushirish
-    this.bot = new TelegramBot(token, { polling: true });
+    this.bot = new TelegramBot(token, { polling: false });
 
     // Pollingni boshlash (faqat bir marta ishga tushirish)
     this.bot.on('polling_error', (error) => {

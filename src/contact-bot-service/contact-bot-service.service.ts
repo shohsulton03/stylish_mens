@@ -17,8 +17,12 @@ export class ContactBotServiceService {
     }
 
     // node-telegram-bot-api bilan botni yaratish
-    this.bot = new TelegramBot(token, { polling: true });
+    this.bot = new TelegramBot(token);
     this.chatId = chatId as string;
+
+    // Webhookni sozlash
+    const url = 'https://ngrok.com/r/iep/webhook';  // O'zingizning domain va pathni kiriting
+    this.bot.setWebHook(url);
   }
 
   async sendContactFormNotification(contactFormData: CreateContactFormDto) {
@@ -29,27 +33,15 @@ export class ContactBotServiceService {
 📧 *Email:* ${contactFormData.email}
 💬 *Comment:* ${contactFormData.comments}
     `;
-
-    const attemptToSendMessage = async (retries = 3) => {
-      try {
-        const response = await this.bot.sendMessage(this.chatId, message, { parse_mode: 'Markdown' });
-        console.log('Telegram response:', response);
-      } catch (error) {
-        console.error('❌ Error details:', error);
-        if (error.response) {
-          console.error('Telegram error response:', error.response.data);
-        }
-        
-        if (retries > 0) {
-          console.log(`Retrying... Attempts remaining: ${retries}`);
-          await new Promise(resolve => setTimeout(resolve, 5000)); // 5 seconds delay before retrying
-          return attemptToSendMessage(retries - 1); // Retry the message
-        } else {
-          console.error('Failed to send message after multiple attempts.');
-        }
+    
+    try {
+      const response = await this.bot.sendMessage(this.chatId, message, { parse_mode: 'Markdown' });
+      console.log('Telegram response:', response);
+    } catch (error) {
+      console.error('❌ Error details:', error);
+      if (error.response) {
+        console.error('Telegram error response:', error.response.data);
       }
-    };
-
-    await attemptToSendMessage(); // Start with the first attempt
+    }
   }
 }

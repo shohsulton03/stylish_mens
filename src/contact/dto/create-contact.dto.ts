@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsNotEmpty, IsString, Matches } from "class-validator";
+import { IsEmail, IsNotEmpty, IsString, Matches, MaxLength } from "class-validator";
 
 export class CreateContactDto {
   @ApiProperty({
@@ -8,10 +8,7 @@ export class CreateContactDto {
   })
   @IsString()
   @IsNotEmpty()
-  @Matches(/^\+?[1-9]\d{1,14}$/, {
-    message:
-      "The phone number must be in international format (for example, +14155552671)",
-  })
+  @MaxLength(16)
   phone_number: string;
 
   @ApiProperty({

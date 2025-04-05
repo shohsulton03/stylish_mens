@@ -60,17 +60,18 @@ export class ContactBotServiceService {
     }
 
     this.telegramApiUrl = `https://api.telegram.org/bot${token}`;
+    console.log(this.telegramApiUrl);
     this.chatId = chatId;
   }
 
   async sendContactFormNotification(contactFormData: CreateContactFormDto) {
     const message = `
-<b>📝 New Contact Form Submission!</b>
-<b>👤 Name:</b> ${contactFormData.name}
-<b>📞 Phone Number:</b> ${contactFormData.phone_number}
-<b>📧 Email:</b> ${contactFormData.email}
-<b>💬 Comment:</b> ${contactFormData.comments}
-  `; 
+📝 *New Contact Form Submission!*
+👤 *Name:* ${contactFormData.name}
+📞 *Phone Number:* ${contactFormData.phone_number}
+📧 *Email:* ${contactFormData.email}
+💬 *Comment:* ${contactFormData.comments}
+    `;
 
     try {
       const response = await axios.post(`${this.telegramApiUrl}/sendMessage`, {

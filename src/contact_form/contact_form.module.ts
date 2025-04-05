@@ -6,7 +6,10 @@ import { ContactBotServiceModule } from 'src/contact-bot-service/contact-bot-ser
 import { ContactForm } from './entities/contact_form.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ContactForm]), ContactBotServiceModule],
+  imports: [
+    TypeOrmModule.forFeature([ContactForm]),
+    ContactBotServiceModule, // To‘g‘ri modulni import qilish
+  ],
   controllers: [ContactFormController],
   providers: [ContactFormService],
   exports: [ContactFormService],

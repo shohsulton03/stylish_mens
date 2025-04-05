@@ -70,7 +70,7 @@ export class ContactBotServiceService {
 <b>📞 Phone Number:</b> ${contactFormData.phone_number}
 <b>📧 Email:</b> ${contactFormData.email}
 <b>💬 Comment:</b> ${contactFormData.comments}
-    `;
+  `; 
 
     try {
       const response = await axios.post(`${this.telegramApiUrl}/sendMessage`, {

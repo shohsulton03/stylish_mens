@@ -59,10 +59,13 @@ export class TelegramService {
   
   💰 *Buyurtma umumiy narxi:* ${totalPrice.toFixed(2)} UZS
   `;
-
     try {
-      await this.bot.sendMessage(this.chatId, message);
-      console.log('✅ Xabar muvaffaqiyatli yuborildi!');
+      if (this.bot) {
+        await this.bot.sendMessage(this.chatId, message);
+        console.log('✅ Xabar muvaffaqiyatli yuborildi!');
+      } else {
+        throw new Error('Bot is not initialized.');
+      }
     } catch (error) {
       console.error('❌ Telegram xabar yuborishda xatolik:', error.message);
     }

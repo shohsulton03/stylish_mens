@@ -16,6 +16,8 @@ export class TelegramService {
       throw new Error('Telegram token or chat ID is missing');
     }
 
+    this.bot = new TelegramBot(token, { polling: false });
+
   }
 
   // ✅ Telegramga xabar yuborish funktsiyasi

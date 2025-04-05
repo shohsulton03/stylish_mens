@@ -30,12 +30,13 @@ async function start() {
         if (!origin || allowedOrigins.includes(origin)) {
           callback(null, true);
         } else {
-          callback(new BadRequestException("Not allowed by CORS"));
+          callback(new Error("Not allowed by CORS"));
         }
       },
       methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
       credentials: true,
     });
+
 
     const config = new DocumentBuilder()
       .setTitle("Men Stylish API")

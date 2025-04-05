@@ -83,8 +83,13 @@ export class ContactBotServiceService {
     } catch (error) {
       console.error('❌ Error sending Telegram message:', error.message);
       if (error.response) {
-        console.error('Telegram error response:', error.response.data);
+        console.error('📩 Telegram response error data:', error.response.data);
+      } else if (error.request) {
+        console.error('📡 No response received:', error.request);
+      } else {
+        console.error('🔧 Request setup error:', error.message);
       }
     }
+    
   }
 }

@@ -77,7 +77,7 @@ export class ContactBotServiceService {
       const response = await axios.post(`${this.telegramApiUrl}/sendMessage`, {
         chat_id: this.chatId,
         text: message,
-        parse_mode: 'HTML',
+        parse_mode: 'Markdown',
       });
 
       console.log('✅ Telegram response:', response.data);

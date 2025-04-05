@@ -15,15 +15,32 @@ import { SizesModule } from './sizes/sizes.module';
 import { ColorsModule } from './colors/colors.module';
 import { ProductModule } from './product/product.module';
 import { OrderModule } from './order/order.module';
-import { TelegramModule } from './telegram_bot/telegram_bot.module';
 import { ContactBotServiceModule } from './contact-bot-service/contact-bot-service.module';
 import { ContactFormModule } from './contact_form/contact_form.module';
+import { MybotModule } from './mybot/mybot.module';
+import { BOT_NAME } from './mybot/app.constants';
+import { TelegrafModule } from 'nestjs-telegraf';
+import { TelegramModule } from './telegram_bot/telegram_bot.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: ".env", isGlobal: true }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, "..", "static"),
+    }),
+    TelegrafModule.forRootAsync({
+      botName: BOT_NAME,
+      useFactory: () => {
+        if (!process.env.MY_BOT_TOKEN) {
+          throw new Error("BOT_TOKEN is not defined");
+        }
+
+        return {
+          token: process.env.MY_BOT_TOKEN,
+          include: [MybotModule],
+          middlewares: [],
+        };
+      },
     }),
     TypeOrmModule.forRoot({
       type: "postgres",
@@ -52,6 +69,7 @@ import { ContactFormModule } from './contact_form/contact_form.module';
     TelegramModule,
     ContactBotServiceModule,
     ContactFormModule,
+    MybotModule,
   ],
   controllers: [],
   providers: [],

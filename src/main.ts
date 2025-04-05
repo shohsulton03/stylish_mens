@@ -25,6 +25,7 @@ async function start() {
           "http://localhost:3001",
           "http://localhost:3000",
           "http://170.64.234.64:3030",
+          "https://menswear-admin.vercel.app",
         ];
         if (!origin || allowedOrigins.includes(origin)) {
           callback(null, true);

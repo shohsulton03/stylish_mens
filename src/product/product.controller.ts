@@ -10,6 +10,7 @@ import {
   UploadedFiles,
   Query,
   UseGuards,
+  BadRequestException,
 } from "@nestjs/common";
 import { ProductService } from "./product.service";
 import { CreateProductDto } from "./dto/create-product.dto";
@@ -38,6 +39,9 @@ export class ProductController {
     @Body() createProductDto: CreateProductDto,
     @UploadedFiles() files: Array<any>
   ) {
+    if (!files || files.length === 0) {
+      throw new BadRequestException("No files uploaded");
+    }
     return this.productService.create(createProductDto, files);
   }
 

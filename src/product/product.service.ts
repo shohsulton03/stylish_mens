@@ -10,6 +10,7 @@ import { Size } from '../sizes/entities/size.entity';
 import { Discount } from '../discount/entities/discount.entity';
 import { FileService } from '../file/file.service';
 import { FilterProductDto } from './dto/filter-product.dto';
+import { log } from 'console';
 
 @Injectable()
 export class ProductService {
@@ -67,6 +68,14 @@ export class ProductService {
         ? JSON.parse(createProductDto.materials)
         : createProductDto.materials;
 
+
+    const fileUpload = await Promise.all(
+      files.map((file) => this.fileService.saveFile(file))
+    );
+
+    console.log(`${fileUpload}  cdksmvlkfmvslfkvmsk'mfvd'fklv`);
+    
+
     const product = new Product();
     product.title_eng = createProductDto.title_eng;
     product.title_de = createProductDto.title_de;
@@ -79,9 +88,7 @@ export class ProductService {
     product.category_id = createProductDto.category_id;
     product.colors = colors;
     product.sizes = sizes;
-    product.images = await Promise.all(
-      files.map((file) => this.fileService.saveFile(file))
-    );
+    product.images = fileUpload
     product.materials = materials;
     product.discount = discount;
     product.discount_id = createProductDto.discount_id;

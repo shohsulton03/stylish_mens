@@ -15,11 +15,12 @@ export class FileService {
       }
 
       const mimeTypesMap = {
-        'image/jpeg': '.jpg',
-        'image/png': '.png',
-        'image/gif': '.gif',
-        'image/webp': '.webp',
+        "image/jpeg": ".jpeg",
+        "image/png": ".png",
+        "image/gif": ".gif",
+        "image/webp": ".webp",
       };
+
 
       if (!mimeTypesMap[file.mimetype]) {
         console.error('Yaroqsiz fayl turi:', file.mimetype);

@@ -1,26 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { CreateMybotDto } from './dto/create-mybot.dto';
 import { UpdateMybotDto } from './dto/update-mybot.dto';
+import { BOT_NAME } from './app.constants';
+import { InjectBot } from 'nestjs-telegraf';
+import { Context, Telegraf } from 'telegraf';
 
 @Injectable()
 export class MybotService {
-  create(createMybotDto: CreateMybotDto) {
-    return 'This action adds a new mybot';
-  }
+  constructor(@InjectBot(BOT_NAME) private bot: Telegraf<Context>) {}
 
-  findAll() {
-    return `This action returns all mybot`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} mybot`;
-  }
-
-  update(id: number, updateMybotDto: UpdateMybotDto) {
-    return `This action updates a #${id} mybot`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} mybot`;
+  async start(ctx:Context) {
+    
   }
 }

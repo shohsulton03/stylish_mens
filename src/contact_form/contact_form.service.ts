@@ -1,4 +1,4 @@
-import { BadGatewayException, Injectable } from '@nestjs/common';
+import { BadGatewayException, BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { CreateContactFormDto } from './dto/create-contact_form.dto';
 import { UpdateContactFormDto } from './dto/update-contact_form.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -20,17 +20,24 @@ export class ContactFormService {
     const contactForm = await this.contactFormRepo.save(contact); 
   
     if (!contact.id) {
-      throw new BadGatewayException('Failed to create contact');
+      throw new BadRequestException('Failed to create contact');
     }
   
     // Telegram botga yuborish
-    await this.contactFormService.sendContactFormNotification(contactForm);
+    try {
+      await this.contactFormService.sendContactFormNotification(contactForm);
+    } catch (error) {
+      console.error('Telegram xatolik:', error);
+      // Agar Telegramga yuborishda muammo bo'lsa, bu xatolikni alohida ko'rsatish mumkin.
+      throw new InternalServerErrorException('Telegram xabarini yuborishda xatolik yuz berdi');
+    }
+    
     
     return contactForm;
 
     } catch(error){
       console.error(error.stack);
-      throw new BadGatewayException('Failed to create contact');
+      throw new BadRequestException('Failed to create contact');
     }
   
   }

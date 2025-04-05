@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, HttpException, HttpStatus } from '@nestjs/common';
 import { ContactBotServiceService } from './contact-bot-service.service';
 import { CreateContactFormDto } from 'src/contact_form/dto/create-contact_form.dto';
 
@@ -15,7 +15,19 @@ export class ContactBotServiceController {
       return { message: '✅ Xabar yuborildi!' };
     } catch (error) {
       console.error('❌ Telegram xabar yuborishda xatolik:', error);
-      throw new Error('Telegram xabar yuborishda muammo yuz berdi.');
+      
+      // Xatolikni to‘g‘ri formatlash
+      if (error.response) {
+        throw new HttpException(
+          `Telegram xabar yuborishda muammo: ${error.response.data.description || error.response.data}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      }
+      
+      throw new HttpException(
+        'Telegram xabar yuborishda nomalum muammo yuz berdi.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 }

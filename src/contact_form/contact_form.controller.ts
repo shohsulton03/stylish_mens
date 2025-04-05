@@ -12,26 +12,29 @@ export class ContactFormController {
     private readonly contactFormService: ContactFormService
   ) {}
 
-  @ApiOperation({ summary: 'Contact form'})
+  @ApiOperation({ summary: 'Create contact form' })
   @ApiResponse({ 
     status: 201, 
-    description: 'Created', 
+    description: 'Contact form created successfully', 
     type: ContactForm 
   })
   @Post()
-  async create(@Body() createOrderDto: CreateContactFormDto) {
-      try {
-          const newOrder = await this.contactFormService.create(createOrderDto);
+  async create(@Body() createContactFormDto: CreateContactFormDto) {
+    try {
+      // Create the contact form and send it to the Telegram bot
+      const newContactForm = await this.contactFormService.create(createContactFormDto);
       
-          return {
-              success: true,
-              message: 'Xabar telegram botga junatildi!',
-              data: newOrder,
-          };
-      } catch (error) {
-          throw new BadRequestException('Xabarnoma yaratishda xatolik yuz berdi!');
-      }
+      return {
+        success: true,
+        message: '✅ Xabar telegram botga junatildi!',
+        data: newContactForm,
+      };
+    } catch (error) {
+      console.error('❌ Error creating contact form:', error);
+      throw new BadRequestException('Xabarnoma yaratishda xatolik yuz berdi!');
+    }
   }
+
 
 
   @ApiOperation({ summary: 'Get all contact forms'})

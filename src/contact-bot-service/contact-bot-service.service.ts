@@ -65,31 +65,32 @@ export class ContactBotServiceService {
 
   async sendContactFormNotification(contactFormData: CreateContactFormDto) {
     const message = `
-📝 *New Contact Form Submission!*
-👤 *Name:* ${contactFormData.name}
-📞 *Phone Number:* ${contactFormData.phone_number}
-📧 *Email:* ${contactFormData.email}
-💬 *Comment:* ${contactFormData.comments}
+<b>📝 New Contact Form Submission!</b>
+<b>👤 Name:</b> ${contactFormData.name}
+<b>📞 Phone Number:</b> ${contactFormData.phone_number}
+<b>📧 Email:</b> ${contactFormData.email}
+<b>💬 Comment:</b> ${contactFormData.comments}
     `;
 
     try {
       const response = await axios.post(`${this.telegramApiUrl}/sendMessage`, {
         chat_id: this.chatId,
         text: message,
-        parse_mode: 'Markdown',
+        parse_mode: 'HTML',
       });
 
       console.log('✅ Telegram response:', response.data);
     } catch (error) {
       console.error('❌ Error sending Telegram message:', error.message);
+
       if (error.response) {
+        console.error('📩 Telegram response error status:', error.response.status);
         console.error('📩 Telegram response error data:', error.response.data);
       } else if (error.request) {
-        console.error('📡 No response received:', error.request);
+        console.error('📡 No response received from Telegram:', error.request);
       } else {
         console.error('🔧 Request setup error:', error.message);
       }
     }
-    
   }
 }

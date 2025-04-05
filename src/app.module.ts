@@ -17,10 +17,10 @@ import { ProductModule } from './product/product.module';
 import { OrderModule } from './order/order.module';
 import { ContactBotServiceModule } from './contact-bot-service/contact-bot-service.module';
 import { ContactFormModule } from './contact_form/contact_form.module';
-import { MybotModule } from './mybot/mybot.module';
 import { BOT_NAME } from './mybot/app.constants';
 import { TelegrafModule } from 'nestjs-telegraf';
 import { TelegramModule } from './telegram_bot/telegram_bot.module';
+import { MybotModule } from './mybot/mybot.module';
 
 @Module({
   imports: [

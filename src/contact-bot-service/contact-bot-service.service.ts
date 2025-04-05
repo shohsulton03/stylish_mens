@@ -76,7 +76,7 @@ export class ContactBotServiceService {
     try {
       const response = await axios.post(`${this.telegramApiUrl}/sendMessage`, {
         chat_id: this.chatId,
-        text: message.replace(/([_*[\]()~`>#+-=|{}.!])/g, '\\$1'),
+        text: message,
         parse_mode: 'Markdown',
       });
 

@@ -68,13 +68,11 @@ export class ProductService {
         ? JSON.parse(createProductDto.materials)
         : createProductDto.materials;
 
-
     const fileUpload = await Promise.all(
       files.map((file) => this.fileService.saveFile(file))
     );
 
     console.log(`${fileUpload}  cdksmvlkfmvslfkvmsk'mfvd'fklv`);
-    
 
     const product = new Product();
     product.title_eng = createProductDto.title_eng;
@@ -88,7 +86,7 @@ export class ProductService {
     product.category_id = createProductDto.category_id;
     product.colors = colors;
     product.sizes = sizes;
-    product.images = fileUpload
+    product.images = fileUpload;
     product.materials = materials;
     product.discount = discount;
     product.discount_id = createProductDto.discount_id;
@@ -187,12 +185,21 @@ export class ProductService {
     updateProductDto: UpdateProductDto,
     files?: Array<any>
   ) {
-    const product = await this.productRepository.findOne({ where: { id } });
+    const product = await this.productRepository.findOne({
+      where: { id },
+      relations: {
+        category: true,
+        colors: true,
+        sizes: true,
+        discount: true,
+      },
+    });
 
     if (!product) {
       throw new BadRequestException("Product not found");
     }
 
+    // Update category
     if (updateProductDto.category_id) {
       const category = await this.categoryRepository.findOne({
         where: { id: updateProductDto.category_id },
@@ -204,7 +211,8 @@ export class ProductService {
       product.category_id = updateProductDto.category_id;
     }
 
-    if (updateProductDto.colors_id) {
+    // Update colors
+    if (updateProductDto.colors_id?.length) {
       const colors = await this.colorRepository.findBy({
         id: In(updateProductDto.colors_id),
       });
@@ -214,7 +222,8 @@ export class ProductService {
       product.colors = colors;
     }
 
-    if (updateProductDto.sizes_id) {
+    // Update sizes
+    if (updateProductDto.sizes_id?.length) {
       const sizes = await this.sizeRepository.findBy({
         id: In(updateProductDto.sizes_id),
       });
@@ -224,35 +233,58 @@ export class ProductService {
       product.sizes = sizes;
     }
 
+    // Update discount
     if (updateProductDto.discount_id !== undefined) {
-      let discount: Discount | null = null;
-      if (updateProductDto.discount_id) {
-        discount = await this.discountRepository.findOne({
+      if (updateProductDto.discount_id === null) {
+        product.discount = null;
+        product.discount_id = null;
+      } else {
+        const discount = await this.discountRepository.findOne({
           where: { id: updateProductDto.discount_id },
         });
+        if (!discount) {
+          throw new BadRequestException("Discount not found");
+        }
+        product.discount = discount;
+        product.discount_id = updateProductDto.discount_id;
       }
-      if (updateProductDto.discount_id && !discount) {
-        throw new BadRequestException("Discount not found");
-      }
-      product.discount = discount;
-      product.discount_id = updateProductDto.discount_id;
     }
 
-    if (updateProductDto.materials) {
+    // Update materials
+    if (updateProductDto.materials !== undefined) {
       product.materials =
         typeof updateProductDto.materials === "string"
           ? JSON.parse(updateProductDto.materials)
           : updateProductDto.materials;
     }
 
-    if (files && files.length > 0) {
-      await Promise.all(
-        product.images.map((img) => this.fileService.deleteFile(img))
-      );
-      product.images = await Promise.all(
+    // Update images
+    if (files?.length) {
+      if (product.images?.length) {
+        await Promise.all(
+          product.images.map((img) => this.fileService.deleteFile(img))
+        );
+      }
+
+      const uploadedImages = await Promise.all(
         files.map((file) => this.fileService.saveFile(file))
       );
+      product.images = uploadedImages;
     }
+
+    // Update basic fields (if provided)
+    if (updateProductDto.title_de) product.title_de = updateProductDto.title_de;
+    if (updateProductDto.title_eng)
+      product.title_eng = updateProductDto.title_eng;
+    if (updateProductDto.title_ru) product.title_ru = updateProductDto.title_ru;
+    if (updateProductDto.description_de)
+      product.description_de = updateProductDto.description_de;
+    if (updateProductDto.description_eng)
+      product.description_eng = updateProductDto.description_eng;
+    if (updateProductDto.description_ru)
+      product.description_ru = updateProductDto.description_ru;
+    if (updateProductDto.price !== undefined)
+      product.price = updateProductDto.price;
 
     await this.productRepository.save(product);
 

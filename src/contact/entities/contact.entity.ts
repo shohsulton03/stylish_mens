@@ -12,7 +12,7 @@ export class Contact {
   email: string;
 
   @Column({ type: "varchar" })
-  address_eng: string;
+  address_en: string;
 
   @Column({ type: "varchar" })
   address_ru: string;

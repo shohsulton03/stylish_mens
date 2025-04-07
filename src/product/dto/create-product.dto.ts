@@ -17,7 +17,7 @@ export class CreateProductDto {
   })
   @IsString()
   @IsNotEmpty()
-  title_eng: string;
+  title_en: string;
 
   @ApiProperty({
     description: "Mahsulot nomi rus tilida",
@@ -41,7 +41,7 @@ export class CreateProductDto {
   })
   @IsString()
   @IsNotEmpty()
-  description_eng: string;
+  description_en: string;
 
   @ApiProperty({
     description: "Mahsulot tavsifi (Ruscha)",

@@ -75,11 +75,11 @@ export class ProductService {
     console.log(`${fileUpload}  cdksmvlkfmvslfkvmsk'mfvd'fklv`);
 
     const product = new Product();
-    product.title_eng = createProductDto.title_eng;
+    product.title_en = createProductDto.title_en;
     product.title_de = createProductDto.title_de;
     product.title_ru = createProductDto.title_ru;
     product.description_de = createProductDto.description_de;
-    product.description_eng = createProductDto.description_eng;
+    product.description_en = createProductDto.description_en;
     product.description_ru = createProductDto.description_ru;
     product.price = createProductDto.price;
     product.category = categorry;
@@ -274,13 +274,13 @@ export class ProductService {
 
     // Update basic fields (if provided)
     if (updateProductDto.title_de) product.title_de = updateProductDto.title_de;
-    if (updateProductDto.title_eng)
-      product.title_eng = updateProductDto.title_eng;
+    if (updateProductDto.title_en)
+      product.title_en = updateProductDto.title_en;
     if (updateProductDto.title_ru) product.title_ru = updateProductDto.title_ru;
     if (updateProductDto.description_de)
       product.description_de = updateProductDto.description_de;
-    if (updateProductDto.description_eng)
-      product.description_eng = updateProductDto.description_eng;
+    if (updateProductDto.description_en)
+      product.description_en = updateProductDto.description_en;
     if (updateProductDto.description_ru)
       product.description_ru = updateProductDto.description_ru;
     if (updateProductDto.price !== undefined)

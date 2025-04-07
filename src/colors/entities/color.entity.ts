@@ -7,7 +7,7 @@ export class Color {
   id: number;
 
   @Column({ type: "varchar" })
-  color_eng: string;
+  color_en: string;
 
   @Column({ type: "varchar" })
   color_ru: string;

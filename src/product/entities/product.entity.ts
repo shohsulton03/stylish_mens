@@ -66,5 +66,5 @@ export class Product {
   discount: Discount | null;
 
   @Column({ type: "int", nullable: true })
-  discount_id: number;
+  discount_id: number | null;
 }

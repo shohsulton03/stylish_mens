@@ -85,4 +85,24 @@ export class FilterProductDto {
   @Type(() => Number)
   @IsInt()
   limit: number = 10;
+
+  @ApiProperty({
+    description: "Sort field: price or created_at",
+    required: false,
+    enum: ["price", "created_at"],
+    default: "created_at",
+  })
+  @IsOptional()
+  @IsString()
+  sortBy?: "price" | "created_at";
+
+  @ApiProperty({
+    description: "Sort order: ASC or DESC",
+    required: false,
+    enum: ["ASC", "DESC"],
+    default: "DESC",
+  })
+  @IsOptional()
+  @IsString()
+  sortOrder?: "ASC" | "DESC";
 }

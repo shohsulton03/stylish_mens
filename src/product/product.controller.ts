@@ -69,6 +69,20 @@ export class ProductController {
   })
   @ApiQuery({ name: "page", required: false, type: Number, example: 1 })
   @ApiQuery({ name: "limit", required: false, type: Number, example: 10 })
+  @ApiQuery({
+    name: "sortBy",
+    required: false,
+    enum: ["price", "created_at"],
+    description: "Field to sort by",
+    example: "price",
+  })
+  @ApiQuery({
+    name: "sortOrder",
+    required: false,
+    enum: ["ASC", "DESC"],
+    description: "Sort direction",
+    example: "DESC",
+  })
   @Get()
   findAll(@Query() filterProductDto: FilterProductDto) {
     return this.productService.findAll(filterProductDto);

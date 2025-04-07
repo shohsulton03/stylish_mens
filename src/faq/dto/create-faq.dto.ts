@@ -8,7 +8,7 @@ export class CreateFaqDto {
   })
   @IsString()
   @IsNotEmpty()
-  question_eng: string;
+  question_en: string;
 
   @ApiProperty({
     description: "Question in Russian",
@@ -32,7 +32,7 @@ export class CreateFaqDto {
   })
   @IsString()
   @IsNotEmpty()
-  answer_eng: string;
+  answer_en: string;
 
   @ApiProperty({
     description: "Answer in Russian",

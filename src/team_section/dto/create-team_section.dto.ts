@@ -41,5 +41,5 @@ export class CreateTeamSectionDto {
   })
   @IsString()
   @IsNotEmpty()
-  position_eng: string;
+  position_en: string;
 }

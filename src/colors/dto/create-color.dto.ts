@@ -8,7 +8,7 @@ export class CreateColorDto {
   })
   @IsNotEmpty()
   @IsString()
-  color_eng: string;
+  color_en: string;
 
   @ApiProperty({
     description: "Color name in Russian",

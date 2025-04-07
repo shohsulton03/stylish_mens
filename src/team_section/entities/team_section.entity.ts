@@ -18,5 +18,5 @@ export class TeamSection {
   position_ru: string; // Ruscha
 
   @Column({ type: "varchar" })
-  position_eng: string; // Inglizcha
+  position_en: string; // Inglizcha
 }

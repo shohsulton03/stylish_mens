@@ -50,7 +50,7 @@ ${
 - 💵 Price: ${price.toFixed(2)} UZS
 - 📦 Quantity: ${quantity}
 - 🏷 Category: ${product.category ? product.category.name_en : "No category"}
-- 🎨 Colors: ${product.colors.length > 0 ? product.colors.map((c) => c.color_eng).join(", ") : "Not available"}
+- 🎨 Colors: ${product.colors.length > 0 ? product.colors.map((c) => c.color_en).join(", ") : "Not available"}
 - 🔲 Sizes: ${product.sizes.length > 0 ? product.sizes.map((s) => s.size).join(", ") : "Not available"}
 - 💸 Discount: ${product.discount ? product.discount.discount : "Not available"}
 - 🧵 Material: ${product.material ? JSON.stringify(product.material) : "Not available"}

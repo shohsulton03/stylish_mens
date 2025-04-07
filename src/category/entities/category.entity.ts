@@ -15,27 +15,6 @@ export class Category {
   @Column({ type: "varchar" })
   name_de: string;
 
-  @Column({
-    type: "varchar",
-    length: 2000,
-    nullable: true,
-  })
-  description_eng: string;
-
-  @Column({
-    type: "varchar",
-    length: 2000,
-    nullable: true,
-  })
-  description_ru: string;
-
-  @Column({
-    type: "varchar",
-    length: 2000,
-    nullable: true,
-  })
-  description_de: string;
-
   @OneToMany(() => Product, (product) => product.category)
   products: Product[];
 }

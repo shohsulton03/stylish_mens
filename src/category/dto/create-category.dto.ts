@@ -25,31 +25,4 @@ export class CreateCategoryDto {
   @IsString()
   @IsNotEmpty()
   name_ru: string;
-
-  @ApiProperty({
-    description: "Category description in English",
-    example: "Electronics category for all electronics items",
-  })
-  @IsString()
-  @IsNotEmpty()
-  @Length(0, 2000)
-  description_eng: string;
-
-  @ApiProperty({
-    description: "Category description in Russian",
-    example: "Категория электроники для всех товаров электроники",
-  })
-  @IsString()
-  @IsNotEmpty()
-  @Length(0, 2000)
-  description_ru: string;
-
-  @ApiProperty({
-    description: "Category description in German",
-    example: "Elektronik-Kategorie für alle Elektronikartikel",
-  })
-  @IsString()
-  @IsNotEmpty()
-  @Length(0, 2000)
-  description_de: string;
 }

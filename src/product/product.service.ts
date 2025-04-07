@@ -81,7 +81,7 @@ export class ProductService {
     product.title_de = createProductDto.title_de;
     product.title_ru = createProductDto.title_ru;
     product.description_de = createProductDto.description_de;
-    product.description_eng = createProductDto.description_de;
+    product.description_eng = createProductDto.description_eng;
     product.description_ru = createProductDto.description_ru;
     product.price = createProductDto.price;
     product.category = categorry;

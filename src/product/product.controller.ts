@@ -15,7 +15,7 @@ import {
 import { ProductService } from "./product.service";
 import { CreateProductDto } from "./dto/create-product.dto";
 import { UpdateProductDto } from "./dto/update-product.dto";
-import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Product } from "./entities/product.entity";
 import { FilesInterceptor } from "@nestjs/platform-express";
 import { FilterProductDto } from "./dto/filter-product.dto";
@@ -51,6 +51,24 @@ export class ProductController {
     description: "All product value",
     type: [Product],
   })
+  @ApiQuery({ name: "title_de", required: false, type: String })
+  @ApiQuery({ name: "title_ru", required: false, type: String })
+  @ApiQuery({ name: "title_eng", required: false, type: String })
+  @ApiQuery({ name: "category_id", required: false, type: Number })
+  @ApiQuery({
+    name: "sizes_id",
+    required: false,
+    type: [Number],
+    isArray: true,
+  })
+  @ApiQuery({
+    name: "colors_id",
+    required: false,
+    type: [Number],
+    isArray: true,
+  })
+  @ApiQuery({ name: "page", required: false, type: Number, example: 1 })
+  @ApiQuery({ name: "limit", required: false, type: Number, example: 10 })
   @Get()
   findAll(@Query() filterProductDto: FilterProductDto) {
     return this.productService.findAll(filterProductDto);

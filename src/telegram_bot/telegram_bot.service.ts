@@ -47,7 +47,7 @@ export class TelegramService {
   - 📝 *Tavsif:* ${product.description || 'Mavjud emas'}
   - 💵 *Narxi:* ${price.toFixed(2)} UZS
   - 📦 *Miqdori:* ${quantity}
-  - 🏷 *Kategoriya:* ${product.category ? product.category.name_eng : 'Kategoriya yo‘q'}
+  - 🏷 *Kategoriya:* ${product.category ? product.category.name_en : 'Kategoriya yo‘q'}
   - 🎨 *Ranglar:* ${product.colors.length > 0 ? product.colors.map(color => color.color_eng).join(', ') : 'Mavjud emas'}
   - 🔲 *O‘lchamlar:* ${product.sizes.length > 0 ? product.sizes.map(size => size.size).join(', ') : 'Mavjud emas'}
   - 💸 *Chegirma:* ${product.discount ? product.discount.discount : 'Mavjud emas'}

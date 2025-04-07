@@ -7,7 +7,7 @@ export class Category {
   id: number;
 
   @Column({ type: "varchar" })
-  name_eng: string;
+  name_en: string;
 
   @Column({ type: "varchar" })
   name_ru: string;

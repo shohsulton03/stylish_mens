@@ -17,10 +17,7 @@ import { ProductModule } from './product/product.module';
 import { OrderModule } from './order/order.module';
 import { ContactBotServiceModule } from './contact-bot-service/contact-bot-service.module';
 import { ContactFormModule } from './contact_form/contact_form.module';
-import { BOT_NAME } from './mybot/app.constants';
-import { TelegrafModule } from 'nestjs-telegraf';
 import { TelegramModule } from './telegram_bot/telegram_bot.module';
-import { MybotModule } from './mybot/mybot.module';
 
 @Module({
   imports: [
@@ -28,20 +25,7 @@ import { MybotModule } from './mybot/mybot.module';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, "..", "static"),
     }),
-    TelegrafModule.forRootAsync({
-      botName: BOT_NAME,
-      useFactory: () => {
-        if (!process.env.MY_BOT_TOKEN) {
-          throw new Error("BOT_TOKEN is not defined");
-        }
-
-        return {
-          token: process.env.MY_BOT_TOKEN,
-          include: [MybotModule],
-          middlewares: [],
-        };
-      },
-    }),
+    
     TypeOrmModule.forRoot({
       type: "postgres",
       host: process.env.POSTGRES_HOST,
@@ -69,7 +53,6 @@ import { MybotModule } from './mybot/mybot.module';
     TelegramModule,
     ContactBotServiceModule,
     ContactFormModule,
-    MybotModule,
   ],
   controllers: [],
   providers: [],

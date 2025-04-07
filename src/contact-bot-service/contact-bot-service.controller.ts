@@ -6,7 +6,6 @@ import { CreateContactFormDto } from 'src/contact_form/dto/create-contact_form.d
 export class ContactBotServiceController {
   constructor(private readonly contactBotService: ContactBotServiceService) {}
 
-  // Xabar yuborish metodini yaratish
   @Post('send-message')
   async sendMessage(@Body() contactFormData: CreateContactFormDto) {
     try {
@@ -16,7 +15,6 @@ export class ContactBotServiceController {
     } catch (error) {
       console.error('❌ Telegram xabar yuborishda xatolik:', error);
       
-      // Xatolikni to‘g‘ri formatlash
       if (error.response) {
         throw new HttpException(
           `Telegram xabar yuborishda muammo: ${error.response.data.description || error.response.data}`,

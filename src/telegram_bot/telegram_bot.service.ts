@@ -19,59 +19,73 @@ export class TelegramService {
     this.bot = new TelegramBot(token, { polling: false });
   }
 
-  // ✅ Telegramga xabar yuborish funktsiyasi
-  // ✅ Telegramga tozalangan xabar yuborish funktsiyasi
   async sendOrderNotification(order: CreateOrderDto) {
     let totalPrice = 0;
-
-    const message = `
-🛒 New Order!
-👤 Name: ${order.full_name}
-📞 Phone: ${order.phone_number}
-📧 Email: ${order.email}
-🌍 Country: ${order.country}
-🏙 City: ${order.city}
-📲 WhatsApp: ${order.whatsapp_number}
-
-📦 Products:
-${
-  order.product_ts && order.product_ts.length > 0
-    ? order.product_ts
-        .map((product) => {
-          const price = parseFloat(product.price);
-          const quantity = parseInt(product.quantity, 10);
-          const totalProductPrice = price * quantity;
-
-          totalPrice += totalProductPrice;
-
-          return `
+  
+    const messageParts: string[] = [];
+  
+    messageParts.push(`
+  🛒 New Order!
+  👤 Name: ${order.full_name}
+  📞 Phone: ${order.phone_number}
+  📧 Email: ${order.email}
+  🌍 Country: ${order.country}
+  🏙 City: ${order.city}
+  📲 WhatsApp: ${order.whatsapp_number}
+  
+  📦 Products:
+  `);
+  
+    if (order.product_ts && order.product_ts.length > 0) {
+      for (const product of order.product_ts) {
+        const price = parseFloat(product.price);
+        const quantity = parseInt(product.quantity, 10);
+        const discount = product.discount?.discount || 0;
+        const discountedPrice = price * (1 - discount / 100);
+        const totalProductPrice = discountedPrice * quantity;
+  
+        totalPrice += totalProductPrice;
+  
+        messageParts.push(`
 - 🏷 Product Name: ${product.title}
-- 📝 Description: ${product.description || "Not available"}
-- 💵 Price: ${price.toFixed(2)} UZS
+- 💵 Price: ${discount > 0 ? `~${price.toFixed(3)} UZS~` : `${price.toFixed(3)} UZS`}
+- 📉 Discount: ${discount ? discount + '%' : 'No discount'}
+- 💸 Price After Discount: ${discount > 0 ? `${discountedPrice.toFixed(2)} UZS` : 'No discount'}
 - 📦 Quantity: ${quantity}
-- 🏷 Category: ${product.category ? product.category.name_en : "No category"}
-- 🎨 Colors: ${product.colors.length > 0 ? product.colors.map((c) => c.color_en).join(", ") : "Not available"}
-- 🔲 Sizes: ${product.sizes.length > 0 ? product.sizes.map((s) => s.size).join(", ") : "Not available"}
-- 💸 Discount: ${product.discount ? product.discount.discount : "Not available"}
-- 🧵 Material: ${product.material ? JSON.stringify(product.material) : "Not available"}
-- 💰 Total Price: ${totalProductPrice.toFixed(2)} UZS`;
-        })
-        .join("\n")
-    : "No products available"
-}
-
-💰 Order Total: ${totalPrice.toFixed(2)} UZS
-`;
-
+- 🏷 Category: ${product.category ? product.category.name_en : 'No category'}
+- 🎨 Colors: ${Array.isArray(product.colors) && product.colors.length > 0 ? product.colors.map(c => c?.color_en || 'Unknown').join(', ') : 'Not available'}
+- 🔲 Sizes: ${Array.isArray(product.sizes) && product.sizes.length > 0 ? product.sizes.map(s => s?.size || 'Unknown').join(', ') : 'Not available'}
+- 🧵 Material: ${product.material ? JSON.stringify(product.material) : 'Not available'}
+- 💰 Total Price: ${totalProductPrice.toFixed(3)} UZS`);
+          
+      }
+    } else {
+      messageParts.push('No products available');
+    }
+  
+    // Yetkazib berish narxi hisoblanmoqda (agar kerak bo‘lsa)
+    let deliveryFee = 0;
+    if (totalPrice > 150000) {
+      deliveryFee = totalPrice * 0.10;
+      totalPrice += deliveryFee;
+    }
+  
+    messageParts.push(`
+  🚚 Delivery Fee: ${deliveryFee > 0 ? deliveryFee.toFixed(2) + ' UZS (10%)' : '0 UZS'}
+  💰 Order Total: ${totalPrice.toFixed(0)} UZS
+  `);
+  
+    const message = messageParts.join('\n');
+  
     try {
       if (this.bot) {
-        await this.bot.sendMessage(this.chatId, message); // ❌ parse_mode yo'q!
-        console.log("✅ Message sent successfully!");
+        await this.bot.sendMessage(this.chatId, message);
+        console.log('✅ Message sent successfully!');
       } else {
-        throw new Error("Bot is not initialized.");
+        throw new Error('Bot is not initialized.');
       }
     } catch (error) {
-      console.error("❌ Error while sending Telegram message:", error.message);
+      console.error('❌ Error while sending Telegram message:', error.message);
     }
   }
 }

@@ -48,14 +48,14 @@ export class TelegramService {
   
          messageParts.push(`
   🏷 Product Name: ${product.title}
-  💵 Price: ${discount > 0 ? `${price.toFixed(3)} $` : `${price.toFixed(0)} UZS`}
+  💵 Price: ${discount > 0 ? `${price.toFixed(0)} $` : `${price.toFixed(0)} UZS`}
   📉 Discount: ${discount ? discount + '%' : 'No discount'}
   💸 Price After Discount: ${discount > 0 ? `${discountedPrice.toFixed(0)} $` : 'No discount'}
   📦 Quantity: ${quantity}
   🏷 Category: ${product.category ? product.category.name_en : 'No category'}
   🎨 Colors: ${Array.isArray(product.colors) && product.colors.length > 0 ? product.colors.map(c => c?.color_en || 'Unknown').join(', ') : 'Not available'}
   🔲 Sizes: ${Array.isArray(product.sizes) && product.sizes.length > 0 ? product.sizes.map(s => s?.size || 'Unknown').join(', ') : 'Not available'}
-  💰 Total Price: ${totalPrice.toFixed(3)} $`);
+  💰 Total Price: ${totalPrice.toFixed(0)} $`);
           
       }
     } else {

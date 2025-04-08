@@ -63,7 +63,8 @@ export class TelegramService {
     // Yetkazib berish narxi hisoblanmoqda (agar kerak bo‘lsa)
     let deliveryFee = 0;
     if (totalPrice < 150) {
-      totalPrice += 10;
+      deliveryFee = 10
+      totalPrice += deliveryFee;
     }
   
     messageParts.push(`

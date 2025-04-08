@@ -6,7 +6,7 @@ export class Faq {
   id: number;
 
   @Column({ type: "varchar" })
-  question_eng: string;
+  question_en: string;
 
   @Column({ type: "varchar" })
   question_ru: string;
@@ -15,7 +15,7 @@ export class Faq {
   question_de: string;
 
   @Column({ type: "text" })
-  answer_eng: string;
+  answer_en: string;
 
   @Column({ type: "text" })
   answer_ru: string;

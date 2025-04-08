@@ -11,7 +11,7 @@ export class CategoryService {
     @InjectRepository(Category) private readonly categoryRepo: Repository<Category>
   ){}
   async create(createCategoryDto: CreateCategoryDto) {
-    const category = await this.categoryRepo.findOne({ where: { name_eng: createCategoryDto.name_eng } });
+    const category = await this.categoryRepo.findOne({ where: { name_en: createCategoryDto.name_en } });
 
     if(category) {
       throw new Error('Category with this name already exists');

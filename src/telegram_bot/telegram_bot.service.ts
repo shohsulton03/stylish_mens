@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import * as TelegramBot from 'node-telegram-bot-api';
-import { ConfigService } from '@nestjs/config';
-import { CreateOrderDto } from '../order/dto/create-order.dto';
+import { Injectable } from "@nestjs/common";
+import * as TelegramBot from "node-telegram-bot-api";
+import { ConfigService } from "@nestjs/config";
+import { CreateOrderDto } from "../order/dto/create-order.dto";
 
 @Injectable()
 export class TelegramService {
@@ -10,14 +10,13 @@ export class TelegramService {
 
   constructor(private configService: ConfigService) {
     const token = process.env.TELEGRAM_BOT_TOKEN;
-    this.chatId = process.env.TELEGRAM_CHAT_ID || '';
+    this.chatId = process.env.TELEGRAM_CHAT_ID || "";
 
     if (!token || !this.chatId) {
-      throw new Error('Telegram token or chat ID is missing');
+      throw new Error("Telegram token or chat ID is missing");
     }
 
     this.bot = new TelegramBot(token, { polling: false });
-
   }
 
   async sendOrderNotification(order: CreateOrderDto) {
@@ -53,8 +52,8 @@ export class TelegramService {
 - 📉 Discount: ${discount ? discount + '%' : 'No discount'}
 - 💸 Price After Discount: ${discount > 0 ? `${discountedPrice.toFixed(2)} UZS` : 'No discount'}
 - 📦 Quantity: ${quantity}
-- 🏷 Category: ${product.category ? product.category.name_eng : 'No category'}
-- 🎨 Colors: ${Array.isArray(product.colors) && product.colors.length > 0 ? product.colors.map(c => c?.color_eng || 'Unknown').join(', ') : 'Not available'}
+- 🏷 Category: ${product.category ? product.category.name_en : 'No category'}
+- 🎨 Colors: ${Array.isArray(product.colors) && product.colors.length > 0 ? product.colors.map(c => c?.color_en || 'Unknown').join(', ') : 'Not available'}
 - 🔲 Sizes: ${Array.isArray(product.sizes) && product.sizes.length > 0 ? product.sizes.map(s => s?.size || 'Unknown').join(', ') : 'Not available'}
 - 🧵 Material: ${product.material ? JSON.stringify(product.material) : 'Not available'}
 - 💰 Total Price: ${totalProductPrice.toFixed(3)} UZS`);
@@ -89,6 +88,4 @@ export class TelegramService {
       console.error('❌ Error while sending Telegram message:', error.message);
     }
   }
-  
-
 }

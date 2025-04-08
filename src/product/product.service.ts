@@ -75,11 +75,11 @@ export class ProductService {
     console.log(`${fileUpload}  cdksmvlkfmvslfkvmsk'mfvd'fklv`);
 
     const product = new Product();
-    product.title_eng = createProductDto.title_eng;
+    product.title_en = createProductDto.title_en;
     product.title_de = createProductDto.title_de;
     product.title_ru = createProductDto.title_ru;
     product.description_de = createProductDto.description_de;
-    product.description_eng = createProductDto.description_eng;
+    product.description_en = createProductDto.description_en;
     product.description_ru = createProductDto.description_ru;
     product.price = createProductDto.price;
     product.category = categorry;
@@ -106,6 +106,8 @@ export class ProductService {
       colors_id,
       page = 1,
       limit = 10,
+      sortBy = "created_at",
+      sortOrder = "DESC",
     } = filterProductDto;
 
     const skip = (page - 1) * limit;
@@ -114,27 +116,24 @@ export class ProductService {
     const filterConditions: any = {};
 
     if (title_de) {
-      filterConditions.title = Like(`%${title_de}%`);
+      filterConditions.title_de = Like(`%${title_de}%`);
     }
 
     if (title_eng) {
-      filterConditions.title = Like(`%${title_eng}%`);
+      filterConditions.title_en = Like(`%${title_eng}%`);
     }
 
     if (title_ru) {
-      filterConditions.title = Like(`%${title_ru}%`);
+      filterConditions.title_ru = Like(`%${title_ru}%`);
     }
 
     if (category_id) {
       filterConditions.category_id = category_id;
     }
 
-    if (sizes_id) {
-      filterConditions.sizes = In(sizes_id);
-    }
-
-    if (colors_id) {
-      filterConditions.colors = In(colors_id);
+    const order: any = {};
+    if (["price", "created_at"].includes(sortBy)) {
+      order[sortBy] = sortOrder;
     }
 
     const [products, total] = await this.productRepository.findAndCount({
@@ -147,6 +146,7 @@ export class ProductService {
       },
       skip,
       take,
+      order,
     });
 
     const totalPages = Math.ceil(total / limit);
@@ -274,13 +274,12 @@ export class ProductService {
 
     // Update basic fields (if provided)
     if (updateProductDto.title_de) product.title_de = updateProductDto.title_de;
-    if (updateProductDto.title_eng)
-      product.title_eng = updateProductDto.title_eng;
+    if (updateProductDto.title_en) product.title_en = updateProductDto.title_en;
     if (updateProductDto.title_ru) product.title_ru = updateProductDto.title_ru;
     if (updateProductDto.description_de)
       product.description_de = updateProductDto.description_de;
-    if (updateProductDto.description_eng)
-      product.description_eng = updateProductDto.description_eng;
+    if (updateProductDto.description_en)
+      product.description_en = updateProductDto.description_en;
     if (updateProductDto.description_ru)
       product.description_ru = updateProductDto.description_ru;
     if (updateProductDto.price !== undefined)

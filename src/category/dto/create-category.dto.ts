@@ -8,7 +8,7 @@ export class CreateCategoryDto {
   })
   @IsString()
   @IsNotEmpty()
-  name_eng: string;
+  name_en: string;
 
   @ApiProperty({
     description: "Category name in german",

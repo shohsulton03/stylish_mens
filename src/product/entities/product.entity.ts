@@ -1,5 +1,6 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   JoinTable,
@@ -18,7 +19,7 @@ export class Product {
   id: number;
 
   @Column({ type: "varchar" })
-  title_eng: string;
+  title_en: string;
 
   @Column({ type: "varchar" })
   title_ru: string;
@@ -27,7 +28,7 @@ export class Product {
   title_de: string;
 
   @Column({ type: "text" })
-  description_eng: string;
+  description_en: string;
 
   @Column({ type: "text" })
   description_ru: string;
@@ -67,4 +68,7 @@ export class Product {
 
   @Column({ type: "int", nullable: true })
   discount_id: number | null;
+
+  @CreateDateColumn({ type: "timestamp"})
+  created_at: Date;
 }

@@ -1,6 +1,6 @@
 import { IsOptional, IsArray, IsInt, IsString } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
-import { Type } from "class-transformer";
+import { Transform, Type } from "class-transformer";
 
 export class FilterProductDto {
   @ApiProperty({
@@ -48,6 +48,9 @@ export class FilterProductDto {
   })
   @IsOptional()
   @IsArray()
+  @Transform(({ value }) =>
+    Array.isArray(value) ? value.map(Number) : [Number(value)]
+  )
   @Type(() => Number)
   @IsInt({ each: true })
   sizes_id?: number[];
@@ -60,6 +63,9 @@ export class FilterProductDto {
   })
   @IsOptional()
   @IsArray()
+  @Transform(({ value }) =>
+    Array.isArray(value) ? value.map(Number) : [Number(value)]
+  )
   @Type(() => Number)
   @IsInt({ each: true })
   colors_id?: number[];

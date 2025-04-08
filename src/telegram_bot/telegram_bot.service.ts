@@ -48,17 +48,17 @@ export class TelegramService {
         totalPrice += totalProductPrice;
   
         messageParts.push(`
-  - 🏷 Product Name: ${product.title}
-  - 📝 Description: ${product.description || 'Not available'}
-  - 💵 Price: ${price.toFixed(2)} UZS
-  - 📉 Discount: ${discount ? discount + '%' : 'No discount'}
-  - 💸 Price After Discount: ${discountedPrice.toFixed(2)} UZS
-  - 📦 Quantity: ${quantity}
-  - 🏷 Category: ${product.category ? product.category.name_eng : 'No category'}
-  - 🎨 Colors: ${product.colors.length > 0 ? product.colors.map(c => c.color_eng).join(', ') : 'Not available'}
-  - 🔲 Sizes: ${product.sizes.length > 0 ? product.sizes.map(s => s.size).join(', ') : 'Not available'}
-  - 🧵 Material: ${product.material ? JSON.stringify(product.material) : 'Not available'}
-  - 💰 Total Price: ${totalProductPrice.toFixed(3)} UZS`);
+- 🏷 Product Name: ${product.title}
+- 💵 Price: ${discount > 0 ? `~${price.toFixed(2)} UZS~` : `${price.toFixed(2)} UZS`}
+- 📉 Discount: ${discount ? discount + '%' : 'No discount'}
+- 💸 Price After Discount: ${discount > 0 ? `${discountedPrice.toFixed(2)} UZS` : 'No discount'}
+- 📦 Quantity: ${quantity}
+- 🏷 Category: ${product.category ? product.category.name_eng : 'No category'}
+- 🎨 Colors: ${Array.isArray(product.colors) && product.colors.length > 0 ? product.colors.map(c => c?.color_eng || 'Unknown').join(', ') : 'Not available'}
+- 🔲 Sizes: ${Array.isArray(product.sizes) && product.sizes.length > 0 ? product.sizes.map(s => s?.size || 'Unknown').join(', ') : 'Not available'}
+- 🧵 Material: ${product.material ? JSON.stringify(product.material) : 'Not available'}
+- 💰 Total Price: ${totalProductPrice.toFixed(3)} UZS`);
+          
       }
     } else {
       messageParts.push('No products available');
@@ -73,7 +73,7 @@ export class TelegramService {
   
     messageParts.push(`
   🚚 Delivery Fee: ${deliveryFee > 0 ? deliveryFee.toFixed(2) + ' UZS (10%)' : '0 UZS'}
-  💰 Order Total: ${totalPrice.toFixed(2)} UZS
+  💰 Order Total: ${totalPrice.toFixed(0)} UZS
   `);
   
     const message = messageParts.join('\n');

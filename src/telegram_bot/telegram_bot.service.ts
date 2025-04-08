@@ -68,7 +68,7 @@ export class TelegramService {
     }
   
     messageParts.push(`
-  🚚 Delivery Fee: ${deliveryFee > 0 ? deliveryFee.toFixed(2) + ' UZS (10%)' : '0 UZS'}
+  🚚 Delivery Fee: ${deliveryFee > 0 ? deliveryFee.toFixed(2) + ' $' : '0 UZS'}
   💰 Order Total: ${totalPrice.toFixed(0)} $
   `);
   

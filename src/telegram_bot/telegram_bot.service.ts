@@ -46,17 +46,16 @@ export class TelegramService {
   
         totalPrice += totalProductPrice;
   
-        messageParts.push(`
-- 🏷 Product Name: ${product.title}
-- 💵 Price: ${discount > 0 ? `~${price.toFixed(3)} UZS~` : `${price.toFixed(3)} UZS`}
-- 📉 Discount: ${discount ? discount + '%' : 'No discount'}
-- 💸 Price After Discount: ${discount > 0 ? `${discountedPrice.toFixed(2)} UZS` : 'No discount'}
-- 📦 Quantity: ${quantity}
-- 🏷 Category: ${product.category ? product.category.name_en : 'No category'}
-- 🎨 Colors: ${Array.isArray(product.colors) && product.colors.length > 0 ? product.colors.map(c => c?.color_en || 'Unknown').join(', ') : 'Not available'}
-- 🔲 Sizes: ${Array.isArray(product.sizes) && product.sizes.length > 0 ? product.sizes.map(s => s?.size || 'Unknown').join(', ') : 'Not available'}
-- 🧵 Material: ${product.material ? JSON.stringify(product.material) : 'Not available'}
-- 💰 Total Price: ${totalProductPrice.toFixed(3)} UZS`);
+         messageParts.push(`
+  🏷 Product Name: ${product.title}
+  💵 Price: ${discount > 0 ? `${price.toFixed(0)} $` : `${price.toFixed(0)} UZS`}
+  📉 Discount: ${discount ? discount + '%' : 'No discount'}
+  💸 Price After Discount: ${discount > 0 ? `${discountedPrice.toFixed(0)} $` : 'No discount'}
+  📦 Quantity: ${quantity}
+  🏷 Category: ${product.category ? product.category.name_en : 'No category'}
+  🎨 Colors: ${Array.isArray(product.colors) && product.colors.length > 0 ? product.colors.map(c => c?.color_en || 'Unknown').join(', ') : 'Not available'}
+  🔲 Sizes: ${Array.isArray(product.sizes) && product.sizes.length > 0 ? product.sizes.map(s => s?.size || 'Unknown').join(', ') : 'Not available'}
+  💰 Total Price: ${totalPrice.toFixed(0)} $`);
           
       }
     } else {
@@ -65,14 +64,14 @@ export class TelegramService {
   
     // Yetkazib berish narxi hisoblanmoqda (agar kerak bo‘lsa)
     let deliveryFee = 0;
-    if (totalPrice > 150000) {
-      deliveryFee = totalPrice * 0.10;
+    if (totalPrice < 150) {
+      deliveryFee = totalPrice * 0.1;
       totalPrice += deliveryFee;
     }
   
     messageParts.push(`
   🚚 Delivery Fee: ${deliveryFee > 0 ? deliveryFee.toFixed(2) + ' UZS (10%)' : '0 UZS'}
-  💰 Order Total: ${totalPrice.toFixed(0)} UZS
+  💰 Order Total: ${totalPrice.toFixed(0)} $
   `);
   
     const message = messageParts.join('\n');

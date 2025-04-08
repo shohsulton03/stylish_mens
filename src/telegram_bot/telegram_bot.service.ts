@@ -35,7 +35,6 @@ export class TelegramService {
   
   📦 Products:
   `);
-  
     if (order.product_ts && order.product_ts.length > 0) {
       for (const product of order.product_ts) {
         const price = parseFloat(product.price);
@@ -45,7 +44,6 @@ export class TelegramService {
         const totalProductPrice = discountedPrice * quantity;
   
         totalPrice += totalProductPrice;
-  
          messageParts.push(`
   🏷 Product Name: ${product.title}
   💵 Price: ${discount > 0 ? `${price.toFixed(0)} $` : `${price.toFixed(0)} UZS`}
@@ -65,8 +63,7 @@ export class TelegramService {
     // Yetkazib berish narxi hisoblanmoqda (agar kerak bo‘lsa)
     let deliveryFee = 0;
     if (totalPrice < 150) {
-      deliveryFee = totalPrice * 0.1;
-      totalPrice += deliveryFee;
+      totalPrice += 10;
     }
   
     messageParts.push(`

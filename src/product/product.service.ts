@@ -111,43 +111,52 @@ export class ProductService {
     } = filterProductDto;
 
     const skip = (page - 1) * limit;
-    const take = limit;
 
-    const filterConditions: any = {};
+    const query = this.productRepository
+      .createQueryBuilder("product")
+      .leftJoinAndSelect("product.category", "category")
+      .leftJoinAndSelect("product.colors", "colors")
+      .leftJoinAndSelect("product.sizes", "sizes")
+      .leftJoinAndSelect("product.discount", "discount");
 
     if (title_de) {
-      filterConditions.title_de = Like(`%${title_de}%`);
+      query.andWhere("product.title_de ILIKE :title_de", {
+        title_de: `%${title_de}%`,
+      });
     }
 
     if (title_eng) {
-      filterConditions.title_en = Like(`%${title_eng}%`);
+      query.andWhere("product.title_en ILIKE :title_eng", {
+        title_eng: `%${title_eng}%`,
+      });
     }
 
     if (title_ru) {
-      filterConditions.title_ru = Like(`%${title_ru}%`);
+      query.andWhere("product.title_ru ILIKE :title_ru", {
+        title_ru: `%${title_ru}%`,
+      });
     }
 
     if (category_id) {
-      filterConditions.category_id = category_id;
+      query.andWhere("product.category_id = :category_id", { category_id });
     }
 
-    const order: any = {};
+    if (sizes_id?.length) {
+      query.andWhere("sizes.id IN (:...sizes_id)", { sizes_id });
+    }
+
+    if (colors_id?.length) {
+      query.andWhere("colors.id IN (:...colors_id)", { colors_id });
+    }
+
     if (["price", "created_at"].includes(sortBy)) {
-      order[sortBy] = sortOrder;
+      query.orderBy(`product.${sortBy}`, sortOrder as "ASC" | "DESC");
     }
 
-    const [products, total] = await this.productRepository.findAndCount({
-      where: filterConditions,
-      relations: {
-        category: true,
-        colors: true,
-        sizes: true,
-        discount: true,
-      },
-      skip,
-      take,
-      order,
-    });
+    const [products, total] = await query
+      .skip(skip)
+      .take(limit)
+      .getManyAndCount();
 
     const totalPages = Math.ceil(total / limit);
 

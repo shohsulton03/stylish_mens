@@ -48,7 +48,7 @@ export class TelegramService {
   
         messageParts.push(`
 - 🏷 Product Name: ${product.title}
-- 💵 Price: ${discount > 0 ? `~${price.toFixed(2)} UZS~` : `${price.toFixed(2)} UZS`}
+- 💵 Price: ${discount > 0 ? `~${price.toFixed(3)} UZS~` : `${price.toFixed(3)} UZS`}
 - 📉 Discount: ${discount ? discount + '%' : 'No discount'}
 - 💸 Price After Discount: ${discount > 0 ? `${discountedPrice.toFixed(2)} UZS` : 'No discount'}
 - 📦 Quantity: ${quantity}

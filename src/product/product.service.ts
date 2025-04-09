@@ -243,21 +243,25 @@ export class ProductService {
     }
 
     // Update discount
-    if (updateProductDto.discount_id !== undefined) {
-      if (updateProductDto.discount_id === null) {
-        product.discount = null;
-        product.discount_id = null;
-      } else {
-        const discount = await this.discountRepository.findOne({
-          where: { id: updateProductDto.discount_id },
-        });
-        if (!discount) {
-          throw new BadRequestException("Discount not found");
-        }
-        product.discount = discount;
-        product.discount_id = updateProductDto.discount_id;
+    if (
+      updateProductDto.discount_id === null ||
+      updateProductDto.discount_id === undefined
+    ) {
+      product.discount = null;
+      product.discount_id = null;
+    } else {
+      const discount = await this.discountRepository.findOne({
+        where: { id: updateProductDto.discount_id },
+      });
+
+      if (!discount) {
+        throw new BadRequestException("Discount not found");
       }
+
+      product.discount = discount;
+      product.discount_id = discount.id;
     }
+
 
     // Update materials
     if (updateProductDto.materials !== undefined) {

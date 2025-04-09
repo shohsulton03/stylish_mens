@@ -8,6 +8,7 @@ import {
   IsObject,
   ArrayMinSize,
   IsNotEmpty,
+  ValidateIf,
 } from "class-validator";
 
 export class CreateProductDto {
@@ -114,8 +115,9 @@ export class CreateProductDto {
     example: 1,
     required: false,
   })
-  @Type(() => Number)
   @IsOptional()
-  @IsNumber()
-  discount_id: number;
+  // Null kelsa ham ruxsat beradi
+  @Type(() => Number)
+  @IsNumber({}, { message: "discount_id must be a valid number" })
+  discount_id: number | null;
 }

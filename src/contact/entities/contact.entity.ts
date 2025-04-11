@@ -5,10 +5,10 @@ export class Contact {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: "varchar", unique: true, nullable: true })
+  @Column({ type: "varchar", nullable: true })
   phone_number: string;
 
-  @Column({ type: "varchar", unique: true, nullable: true })
+  @Column({ type: "varchar", nullable: true })
   email: string;
 
   @Column({ type: "varchar", nullable: true })

@@ -8,7 +8,6 @@ export class CreateContactDto {
   })
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
   @MaxLength(16)
   phone_number: string;
 
@@ -26,7 +25,6 @@ export class CreateContactDto {
   })
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
   address_en: string;
 
   @ApiProperty({
@@ -35,7 +33,6 @@ export class CreateContactDto {
   })
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
   address_ru: string;
 
   @ApiProperty({
@@ -44,6 +41,5 @@ export class CreateContactDto {
   })
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
   address_de: string;
 }

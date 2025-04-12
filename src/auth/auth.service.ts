@@ -35,12 +35,8 @@ export class AuthService {
 
     const tokens = await generateTokens(newAdmin, this.jwtService);
     await this.updateRefreshToken(newAdmin.id, tokens.refresh_token);
-    res.cookie("refresh_token", tokens.refresh_token, {
-      maxAge: Number(process.env.COOKIE_TIME),
-      httpOnly: true,
-    });
 
-    return { id: newAdmin.id, access_token: tokens.access_token };
+    return { id: newAdmin.id, access_token: tokens.access_token, refresh_token: tokens.refresh_token };
   }
 
   async login(logInDto: LogInDto, res: Response) {
@@ -65,15 +61,12 @@ export class AuthService {
 
     const tokens = await generateTokens(admin, this.jwtService);
     await this.updateRefreshToken(admin.id, tokens.refresh_token);
-    res.cookie("refresh_token", tokens.refresh_token, {
-      maxAge: Number(process.env.COOKIE_TIME),
-      httpOnly: true,
-    });
 
     return {
       message: "Admin login succesfully",
       id: admin.id,
       access_token: tokens.access_token,
+      refresh_token: tokens.refresh_token,
     };
   }
 
@@ -109,15 +102,12 @@ export class AuthService {
 
       const tokens = await generateTokens(admin, this.jwtService);
       await this.updateRefreshToken(admin.id, tokens.refresh_token);
-      res.cookie("refresh_token", tokens.refresh_token, {
-        maxAge: Number(process.env.COOKIE_TIME),
-        httpOnly: true,
-      });
 
       return {
         message: "Token refreshed successfully",
         id: admin.id,
         access_token: tokens.access_token,
+        refresh_token: tokens.refresh_token
       };
     } catch (error) {
       console.log(error);

@@ -25,15 +25,15 @@ export class TelegramService {
     const messageParts: string[] = [];
 
     messageParts.push(`
-🛒 Yangi Buyurtma!
-👤 Ism: ${order.full_name}
-📞 Telefon: ${order.phone_number}
-📧 Elektron pochta: ${order.email}
-🌍 Mamlakat: ${order.country}
-🏙 Shahar: ${order.city}
-📲 WhatsApp: ${order.whatsapp_number}
+🛒 New Order!
+👤 Name: ${order.full_name}
+📞 Phone-number: ${order.phone_number}
+📧 Email: ${order.email}
+🌍 Country: ${order.country}
+🏙 City: ${order.city}
+📲 WhatsApp-number: ${order.whatsapp_number}
 
-📦 Mahsulotlar:
+📦 Products:
 `);
 
     if (order.product_ts && order.product_ts.length > 0) {
@@ -44,17 +44,16 @@ export class TelegramService {
         const discountedPrice = price * (1 - discount / 100);
         const totalProductPrice = discountedPrice * quantity;
 
-        // Faqat har bir mahsulotning umumiy narxini hisoblash, lekin totalPrice ni faqat yakuniy hisoblashda yangilaymiz
         messageParts.push(`
-🏷 Mahsulot Nomi: ${product.title_en}
-💵 Narx: ${discount > 0 ? `${price.toFixed(0)} $` : `${price.toFixed(0)} UZS`}
-📉 Chegirma: ${discount ? discount + "%" : "Chegirma yo'q"}
-💸 Chegirmali Narx: ${discount > 0 ? `${discountedPrice.toFixed(0)} $` : "Chegirma yo'q"}
-📦 Soni: ${quantity}
-🏷 Kategoriya: ${product.category ? product.category.name_en : "Kategoriya yo'q"}
-🎨 Rang: ${product.colors || "Mavjud emas"}
-🔲 O'lcham: ${product.sizes || "Mavjud emas"}
-💰 Mahsulot Umumiy Narxi: ${totalProductPrice.toFixed(0)} $
+🏷 Product-name: ${product.title_en}
+💵 Price: ${discount > 0 ? `${price.toFixed(0)} $` : `${price.toFixed(0)} $`}
+📉 Discount: ${discount ? discount + "%" : "No discount"}
+💸 Discount-price: ${discount > 0 ? `${discountedPrice.toFixed(0)} $` : "No discount"}
+📦 Quantity: ${quantity}
+🏷 Category: ${product.category ? product.category.name_en : "Np category"}
+🎨 Color: ${product.colors || "Not available"}
+🔲 Sizes: ${product.sizes || "Not available"}
+💰 Product total price: ${totalProductPrice.toFixed(0)} $
 `);
 
         // Faqat yakuniy umumiy narxni yangilash
@@ -74,8 +73,8 @@ export class TelegramService {
     }
 
     messageParts.push(`
-🚚 Yetkazib berish haqi: ${deliveryFee > 0 ? deliveryFee.toFixed(2) + " $" : "0 UZS"}
-💰 Buyurtma Umumiy Narxi: ${totalPrice.toFixed(0)} $
+🚚 Delivery cost: ${deliveryFee > 0 ? deliveryFee.toFixed(2) + " $" : "0 $"}
+💰 Total Order Price: ${totalPrice.toFixed(0)} $
 `);
 
     const message = messageParts.join("\n");

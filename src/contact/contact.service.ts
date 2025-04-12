@@ -12,22 +12,6 @@ export class ContactService {
   ) {}
 
   async create(createContactDto: CreateContactDto) {
-    // Bir vaqtning o'zida email va telefon raqamini tekshirish
-    const [check_phone_num, check_email] = await Promise.all([
-      this.contactRepo.findOne({
-        where: { phone_number: createContactDto.phone_number },
-      }),
-      this.contactRepo.findOne({ where: { email: createContactDto.email } }),
-    ]);
-
-    if (check_phone_num) {
-      throw new BadRequestException("Bunday telefon raqami mavjud");
-    }
-
-    if (check_email) {
-      throw new BadRequestException("Bunday email mavjud");
-    }
-
     // Yangi contact yaratish
     const newContact = this.contactRepo.create(createContactDto);
     return this.contactRepo.save(newContact);

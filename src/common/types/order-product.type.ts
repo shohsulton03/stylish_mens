@@ -4,7 +4,7 @@ import { Discount } from "src/discount/entities/discount.entity"
 import { Size } from "src/sizes/entities/size.entity"
 
 export type OrderProduct = {
-    title: string,
+    title_en: string,
     description: string,
     price: string,
     categoryId: number,
@@ -12,8 +12,8 @@ export type OrderProduct = {
     material: Object | null,
     discount_id: number | null,
     discount: Discount
-    sizes: Size[],
-    colors: Color[],
+    sizes: string,
+    colors: string,
     images: string[],
     quantity: string
 }

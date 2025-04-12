@@ -5,6 +5,7 @@ import { CreateAdminDto } from '../admin/dto/create-admin.dto';
 import { Response } from 'express';
 import { LogInDto } from './dto/log-in.dto';
 import { CookieGetter } from '../common/decorators/cookie-getter.decorator';
+import { RefreshTokenDto } from './dto/refresh-roken.dto';
 
 @ApiTags("Auth")
 @Controller("auth")
@@ -49,9 +50,9 @@ export class AuthController {
   @HttpCode(200)
   @Post("refresh")
   async refresh(
-    @CookieGetter("refresh_token") refresh_token: string,
+    @Body() refreshTokenDto:RefreshTokenDto,
     @Res({ passthrough: true }) res: Response
   ) {
-    return this.authService.refresh(refresh_token, res);
+    return this.authService.refresh(refreshTokenDto.refresh_token, res);
   }
 }

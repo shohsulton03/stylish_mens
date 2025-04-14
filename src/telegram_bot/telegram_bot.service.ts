@@ -20,8 +20,7 @@ export class TelegramService {
   }
 
   async sendOrderNotification(order: CreateOrderDto) {
-    let totalPrice = 0; // Umumiy narx
-
+    let totalPrice = 0; 
     const messageParts: string[] = [];
 
     messageParts.push(`
@@ -48,7 +47,7 @@ export class TelegramService {
 🏷 Product-name: ${product.title_en}
 💵 Price: ${discount > 0 ? `${price.toFixed(0)} $` : `${price.toFixed(0)} $`}
 📉 Discount: ${discount ? discount + "%" : "No discount"}
-💸 Discount-price: ${discount > 0 ? `${discountedPrice.toFixed(0)} $` : "No discount"}
+💸 Discount-price: ${discount > 0 ? `${discountedPrice.toFixed(1)} $` : "No discount"}
 📦 Quantity: ${quantity}
 🏷 Category: ${product.category ? product.category.name_en : "Np category"}
 🎨 Color: ${product.colors || "Not available"}

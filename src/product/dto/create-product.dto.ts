@@ -91,7 +91,6 @@ export class CreateProductDto {
   })
   @IsOptional()
   @IsArray()
-  @ArrayMinSize(1)
   @Type(() => Number)
   colors_id: number[];
 

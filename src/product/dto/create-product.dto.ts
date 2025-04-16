@@ -120,4 +120,11 @@ export class CreateProductDto {
   @Type(() => Number)
   @IsNumber({}, { message: "discount_id must be a valid number" })
   discount_id: number | null;
+
+  @ApiProperty({
+    description: "Productni minimal sotish soni",
+    example: 2
+  })
+  @IsNumber()
+  min_sell: number;
 }

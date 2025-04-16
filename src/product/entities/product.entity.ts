@@ -71,4 +71,7 @@ export class Product {
 
   @CreateDateColumn({ type: "timestamp"})
   created_at: Date;
+
+  @Column({type: "int"})
+  min_sell: number
 }

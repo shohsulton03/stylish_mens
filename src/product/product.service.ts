@@ -37,13 +37,14 @@ export class ProductService {
     }
 
     let colors: Color[] = [];
-    if (createProductDto.colors_id) {
+    const colorsId = createProductDto.colors_id || [];
+    if (colorsId.length) {
       colors = await this.colorRepository.findBy({
-        id: In(createProductDto.colors_id),
+        id: In(colorsId),
       });
     }
 
-    if (colors.length !== createProductDto.colors_id.length) {
+    if (colors.length !== colorsId.length) {
       throw new BadRequestException("Some colors are not found");
     }
 
@@ -224,22 +225,34 @@ export class ProductService {
     }
 
     // Update colors
-    if (updateProductDto.colors_id?.length) {
-      const colors = await this.colorRepository.findBy({
-        id: In(updateProductDto.colors_id),
-      });
-      if (colors.length !== updateProductDto.colors_id.length) {
+    let colorsId = updateProductDto.colors_id || [];
+    if (typeof colorsId === "string") {
+      try {
+        colorsId = JSON.parse(colorsId);
+      } catch (err) {
+        throw new BadRequestException("Invalid colors_id format");
+      }
+    }
+    if (Array.isArray(colorsId) && colorsId.length) {
+      const colors = await this.colorRepository.findBy({ id: In(colorsId) });
+      if (colors.length !== colorsId.length) {
         throw new BadRequestException("Some colors are not found");
       }
       product.colors = colors;
     }
 
     // Update sizes
-    if (updateProductDto.sizes_id?.length) {
-      const sizes = await this.sizeRepository.findBy({
-        id: In(updateProductDto.sizes_id),
-      });
-      if (sizes.length !== updateProductDto.sizes_id.length) {
+    let sizesId = updateProductDto.sizes_id || [];
+    if (typeof sizesId === "string") {
+      try {
+        sizesId = JSON.parse(sizesId);
+      } catch (err) {
+        throw new BadRequestException("Invalid sizes_id format");
+      }
+    }
+    if (Array.isArray(sizesId) && sizesId.length) {
+      const sizes = await this.sizeRepository.findBy({ id: In(sizesId) });
+      if (sizes.length !== sizesId.length) {
         throw new BadRequestException("Some sizes are not found");
       }
       product.sizes = sizes;
@@ -264,7 +277,6 @@ export class ProductService {
       product.discount = discount;
       product.discount_id = discount.id;
     }
-
 
     // Update materials
     if (updateProductDto.materials !== undefined) {

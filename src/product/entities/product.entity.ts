@@ -50,7 +50,7 @@ export class Product {
   @JoinTable()
   sizes: Size[];
 
-  @ManyToMany(() => Color, (color) => color.products)
+  @ManyToMany(() => Color, (color) => color.products, {nullable:true})
   @JoinTable()
   colors: Color[];
 

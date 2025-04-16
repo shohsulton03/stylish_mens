@@ -111,4 +111,13 @@ export class FilterProductDto {
   @IsOptional()
   @IsString()
   sortOrder?: "ASC" | "DESC";
+
+  @ApiProperty({
+    description: "Productni minimal sotish soni",
+    example: 2,
+  })
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  min_sell: number;
 }

@@ -94,6 +94,7 @@ export class ProductService {
     product.materials = materials;
     product.discount = discount;
     product.discount_id = createProductDto.discount_id;
+    product.min_sell = createProductDto.min_sell;
 
     await this.productRepository.save(product);
 
@@ -322,6 +323,8 @@ export class ProductService {
       product.description_ru = updateProductDto.description_ru;
     if (updateProductDto.price !== undefined)
       product.price = updateProductDto.price;
+    if (updateProductDto.min_sell !== undefined)
+      product.min_sell = updateProductDto.min_sell;
 
     console.log("Before save:", product);
     await this.productRepository.save(product);

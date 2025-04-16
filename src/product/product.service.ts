@@ -1,16 +1,16 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Product } from './entities/product.entity';
-import { In, Like, Repository } from 'typeorm';
-import { Category } from '../category/entities/category.entity';
-import { Color } from '../colors/entities/color.entity';
-import { Size } from '../sizes/entities/size.entity';
-import { Discount } from '../discount/entities/discount.entity';
-import { FileService } from '../file/file.service';
-import { FilterProductDto } from './dto/filter-product.dto';
-import { log } from 'console';
+import { BadRequestException, Injectable } from "@nestjs/common";
+import { CreateProductDto } from "./dto/create-product.dto";
+import { UpdateProductDto } from "./dto/update-product.dto";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Product } from "./entities/product.entity";
+import { In, Like, Repository } from "typeorm";
+import { Category } from "../category/entities/category.entity";
+import { Color } from "../colors/entities/color.entity";
+import { Size } from "../sizes/entities/size.entity";
+import { Discount } from "../discount/entities/discount.entity";
+import { FileService } from "../file/file.service";
+import { FilterProductDto } from "./dto/filter-product.dto";
+import { log } from "console";
 
 @Injectable()
 export class ProductService {
@@ -224,15 +224,16 @@ export class ProductService {
       product.category_id = updateProductDto.category_id;
     }
 
-    // Update colors
+    // Update colors (optional)
     let colorsId = updateProductDto.colors_id || [];
-    if (typeof colorsId === "string") {
+    if (colorsId && typeof colorsId === "string") {
       try {
         colorsId = JSON.parse(colorsId);
       } catch (err) {
         throw new BadRequestException("Invalid colors_id format");
       }
     }
+
     if (Array.isArray(colorsId) && colorsId.length) {
       const colors = await this.colorRepository.findBy({ id: In(colorsId) });
       if (colors.length !== colorsId.length) {
@@ -243,7 +244,7 @@ export class ProductService {
 
     // Update sizes
     let sizesId = updateProductDto.sizes_id || [];
-    if (typeof sizesId === "string") {
+    if (sizesId && typeof sizesId === "string") {
       try {
         sizesId = JSON.parse(sizesId);
       } catch (err) {

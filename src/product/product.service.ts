@@ -224,8 +224,9 @@ export class ProductService {
       product.category_id = updateProductDto.category_id;
     }
 
-    // Update colors (optional)
-    let colorsId = updateProductDto.colors_id || [];
+    // Update colors
+    let colorsId = updateProductDto.colors_id;
+
     if (colorsId && typeof colorsId === "string") {
       try {
         colorsId = JSON.parse(colorsId);
@@ -234,12 +235,20 @@ export class ProductService {
       }
     }
 
-    if (Array.isArray(colorsId) && colorsId.length) {
-      const colors = await this.colorRepository.findBy({ id: In(colorsId) });
-      if (colors.length !== colorsId.length) {
-        throw new BadRequestException("Some colors are not found");
+    if (Array.isArray(colorsId)) {
+      if (colorsId.length) {
+        const colors = await this.colorRepository.findBy({ id: In(colorsId) });
+        if (colors.length !== colorsId.length) {
+          throw new BadRequestException("Some colors are not found");
+        }
+        product.colors = colors;
+      } else {
+        // Foydalanuvchi colors_id: [] yuborsa
+        product.colors = [];
       }
-      product.colors = colors;
+    } else if (colorsId === null || colorsId === undefined) {
+      // Umuman yuborilmasa yoki null bo‘lsa
+      product.colors = [];
     }
 
     // Update sizes
@@ -314,7 +323,9 @@ export class ProductService {
     if (updateProductDto.price !== undefined)
       product.price = updateProductDto.price;
 
+    console.log("Before save:", product);
     await this.productRepository.save(product);
+    console.log("After save:", product);
 
     return product;
   }

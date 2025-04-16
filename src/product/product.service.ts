@@ -36,9 +36,12 @@ export class ProductService {
       throw new BadRequestException("Category not found");
     }
 
-    const colors = await this.colorRepository.findBy({
-      id: In(createProductDto.colors_id),
-    });
+    let colors: Color[] = [];
+    if (createProductDto.colors_id) {
+      colors = await this.colorRepository.findBy({
+        id: In(createProductDto.colors_id),
+      });
+    }
 
     if (colors.length !== createProductDto.colors_id.length) {
       throw new BadRequestException("Some colors are not found");

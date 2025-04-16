@@ -89,6 +89,7 @@ export class CreateProductDto {
     description: "Mahsulot mavjud ranglar ID si ro‘yxati",
     example: [4, 5],
   })
+  @IsOptional()
   @IsArray()
   @ArrayMinSize(1)
   @Type(() => Number)

@@ -52,7 +52,7 @@ export class TelegramService {
 🏷 Category: ${product.category ? product.category.name_en : "Np category"}
 🎨 Color: ${product.colors || "Not available"}
 🔲 Sizes: ${product.sizes || "Not available"}
-💰 Product total price: ${totalProductPrice.toFixed(0)} $
+💰 Product total price: ${totalProductPrice.toFixed(2)} $
 `);
 
         // Faqat yakuniy umumiy narxni yangilash
@@ -72,8 +72,7 @@ export class TelegramService {
     }
 
     messageParts.push(`
-🚚 Delivery cost: ${deliveryFee > 0 ? deliveryFee.toFixed(2) + " $" : "0 $"}
-💰 Total Order Price: ${totalPrice.toFixed(0)} $
+💰 Total Order Price: ${totalPrice.toFixed(2)} $
 `);
 
     const message = messageParts.join("\n");

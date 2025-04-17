@@ -125,6 +125,7 @@ export class CreateProductDto {
     description: "Productni minimal sotish soni",
     example: 2
   })
+  @Type(() => Number)
   @IsNumber()
   min_sell: number;
 }

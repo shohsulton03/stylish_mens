@@ -34,7 +34,6 @@ export class TelegramService {
 
 📦 Products:
 `);
-
     if (order.product_ts && order.product_ts.length > 0) {
       for (const product of order.product_ts) {
         const price = parseFloat(product.price);
@@ -42,7 +41,6 @@ export class TelegramService {
         const discount = product.discount?.discount || 0;
         const discountedPrice = price * (1 - discount / 100);
         const totalProductPrice = discountedPrice * quantity;
-
         messageParts.push(`
 🏷 Product-name: ${product.title_en}
 💵 Price: ${discount > 0 ? `${price.toFixed(0)} $` : `${price.toFixed(0)} $`}
@@ -50,10 +48,10 @@ export class TelegramService {
 💸 Discount-price: ${discount > 0 ? `${discountedPrice.toFixed(1)} $` : "No discount"}
 📦 Quantity: ${quantity}
 🏷 Category: ${product.category ? product.category.name_en : "Np category"}
-🎨 Color: ${product.colors || "Not available"}
-🔲 Sizes: ${product.sizes || "Not available"}
+🎨 Color: ${Array.isArray(product.colors) ? product.colors.map(c => `🎨 ${c}`).join(', ') : "Not available"}
+🔲 Sizes: ${Array.isArray(product.sizes) ? product.sizes.map(s => `📏 ${s}`).join(', ') : "Not available"}
 💰 Product total price: ${totalProductPrice.toFixed(2)} $
-`);
+`); 
 
         // Faqat yakuniy umumiy narxni yangilash
         if (!isNaN(totalProductPrice)) {
